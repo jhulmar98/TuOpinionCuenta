@@ -76,6 +76,11 @@
       </div>
     </div>
 
+    <!-- Botón para guardar -->
+    <div class="row" style="margin-top:14px">
+      <button id="enviarBtn" class="btn btn-primary">💾 Enviar calificación</button>
+    </div>
+
     <div class="hint">
       Añade al final de la URL <br>
       <code>#Camioneta 40 49|EUE 519|SECTOR 1</code>
@@ -101,8 +106,75 @@
     document.getElementById('sector').textContent  = sector;
   }
 
+  function getRating(name){
+    const el = document.querySelector(`input[name="${name}"]:checked`);
+    return el ? Number(el.value) : 0;
+  }
+
   addEventListener('hashchange', render);
   addEventListener('DOMContentLoaded', render);
+</script>
+
+<!-- Firebase + Firestore (modular) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  // Config de tu proyecto
+  const firebaseConfig = {
+    apiKey: "AIzaSyAzqBW_0QduNdRk2lHFzgh8cOqHOzCRq8A",
+    authDomain: "tu-opinion-importa-msi.firebaseapp.com",
+    projectId: "tu-opinion-importa-msi",
+    storageBucket: "tu-opinion-importa-msi.firebasestorage.app",
+    messagingSenderId: "933860804282",
+    appId: "1:933860804282:web:8afef3b37b9d01fdca6483",
+    measurementId: "G-ZM3EM2Z4W7"
+  };
+
+  // Inicializar Firebase
+  const app = initializeApp(firebaseConfig);
+  try { getAnalytics(app); } catch (_) {} // Analytics puede fallar en HTTP local, no es crítico.
+  const db = getFirestore(app);
+
+  // Click para guardar
+  document.getElementById("enviarBtn").addEventListener("click", async () => {
+    const vehiculo = document.getElementById('vehiculo').textContent.trim();
+    const placa    = document.getElementById('placa').textContent.trim();
+    const sector   = document.getElementById('sector').textContent.trim();
+
+    const presentacion = getRating("rating1");
+    const limpieza     = getRating("rating2");
+    const rapidez      = getRating("rating3");
+    const solucion     = getRating("rating4");
+
+    // Validaciones básicas
+    if (vehiculo === "—" || placa === "—" || sector === "—") {
+      alert("Completa Vehículo, Placa y Sector (pasa los datos en la URL).");
+      return;
+    }
+    if (!presentacion || !limpieza || !rapidez || !solucion) {
+      alert("Responde todas las preguntas de calificación.");
+      return;
+    }
+
+    const payload = {
+      vehiculo, placa, sector,
+      calificaciones: { presentacion, limpieza, rapidez, solucion },
+      userAgent: navigator.userAgent,
+      createdAt: serverTimestamp()
+    };
+
+    try {
+      await addDoc(collection(db, "encuestas"), payload);
+      alert("¡Gracias! Tu calificación fue registrada.");
+      // Limpia selecciones (opcional)
+      document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
+    } catch (e) {
+      console.error(e);
+      alert("No se pudo guardar. Revisa tu conexión e inténtalo de nuevo.");
+    }
+  });
 </script>
 </body>
 </html>
