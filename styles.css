@@ -1,97 +1,138 @@
-/* ——— Layout sin scroll ——— */
+/* —— Full pantalla sin scroll —— */
 html, body {
   height: 100%;
   margin: 0;
-  background: #f4f7fb;
+  overflow: hidden;                      /* sin scroll */
+  background: #eef2f8;
   color: #0b1220;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-  overflow: hidden; /* ¡sin scroll! */
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
 }
-.shell {
-  height: 100dvh;             /* viewport real en móviles */
+.screen {
+  height: 100dvh;                        /* viewport real móvil */
   display: grid;
   place-items: center;
-  padding: 6px;
+  padding: clamp(6px, 2vw, 16px);
 }
-.card {
-  width: min(880px, 98vw);
-  height: min(560px, 96dvh);   /* cabe en la altura */
-  background: #fff;
+
+/* Panel que ocupa casi todo */
+.panel {
+  width: min(960px, 100%);
+  height: min(640px, 96dvh);
+  background: #ffffff;
   border: 1px solid #e6e9f0;
-  border-radius: 16px;
-  box-shadow: 0 10px 36px rgba(16,24,40,.08);
-  padding: 12px 14px;
+  border-radius: 18px;
+  box-shadow: 0 12px 36px rgba(16,24,40,.1);
+  padding: clamp(10px, 2vw, 18px);
   display: grid;
-  grid-template-rows: auto auto 1fr auto; /* título, fields, ratings, botón */
-  gap: 8px;
-  overflow: hidden;
+  grid-template-rows: auto auto 1fr auto;  /* header, fields, preguntas, botón */
+  gap: clamp(6px, 1.6vh, 12px);
 }
 
 /* Título centrado */
-.title {
-  margin: 2px 0 4px;
-  font-size: 1.3rem;
+.head h1 {
+  margin: 0;
   text-align: center;
+  font-size: clamp(20px, 3.3vw, 28px);
+  letter-spacing: .4px;
 }
 
-/* ——— Campos compactos ——— */
+/* Campos (2 columnas) */
 .fields {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(6px, 1.4vw, 12px);
 }
-.field { background:#fafcff; border:1px solid #eef1f5; border-radius:10px; padding:8px; }
-.lbl { color:#5b6476; font-size:.78rem; margin-bottom:4px; display:block; }
+.field {
+  background: #f9fbff;
+  border: 1px solid #eef1f5;
+  border-radius: 12px;
+  padding: 8px 10px;
+}
+.lbl {
+  color: #606a7a;
+  font-size: clamp(12px, 1.9vw, 13px);
+  margin-bottom: 4px;
+  display: block;
+}
 .input {
-  width: 100%; padding: 7px 10px; font-size: .95rem;
-  border: 1px solid #e6e9f0; border-radius: 8px; background: #fff;
+  width: 100%;
+  padding: 9px 10px;
+  font-size: clamp(14px, 2.4vw, 15px);
+  border: 1px solid #e6e9f0;
+  border-radius: 10px;
+  background: #fff;
 }
 
-/* ——— Ratings vertical ——— */
-.ratings-vertical {
+/* Preguntas: una columna muy compacta */
+.questions {
   display: grid;
-  grid-auto-rows: minmax(56px, auto);
-  gap: 6px;
+  grid-auto-rows: minmax(54px, auto);
+  gap: 8px;
   align-content: start;
 }
-.q { padding: 6px 8px; border:1px solid #eef1f5; border-radius:10px; background:#fafcff; }
-.qlabel { font-size:.92rem; margin-bottom: 4px; }
+.q {
+  border: 1px solid #eef1f5;
+  background: #f9fbff;
+  border-radius: 12px;
+  padding: 8px 10px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 12px;
+}
+.qlabel {
+  font-size: clamp(14px, 2.6vw, 16px);
+  margin: 0;
+}
 
-/* Estrellitas compactas */
-.stars { display:inline-flex; gap:6px; direction: rtl; user-select:none; }
-.stars input { display:none; }
+/* Estrellitas */
+.stars { display: inline-flex; gap: 6px; direction: rtl; user-select: none; }
+.stars input { display: none; }
 .stars label {
-  font-size:22px; line-height:1; cursor:pointer;
-  color:#d1d5db; transition:transform .1s, color .1s, text-shadow .1s;
+  font-size: clamp(20px, 3.8vw, 24px);
+  line-height: 1;
+  cursor: pointer;
+  color: #d1d5db;
+  transition: transform .1s, color .1s, text-shadow .1s;
 }
 .stars label:hover,
-.stars label:hover ~ label { color:#f5b301; text-shadow:0 0 .5px #f5b301; transform:translateY(-1px) scale(1.05); }
-.stars input:checked ~ label { color:#f5b301; text-shadow:0 0 .5px #f5b301; }
+.stars label:hover ~ label { color: #f5b301; text-shadow: 0 0 .5px #f5b301; transform: translateY(-1px) scale(1.05); }
+.stars input:checked ~ label { color: #f5b301; text-shadow: 0 0 .5px #f5b301; }
 
-/* ——— Botón ——— */
+/* Botón */
+.foot { display: grid; place-items: center; }
 .btn {
-  place-self: center;
-  appearance:none; border:1px solid #0e5cd6; background:#0e5cd6;
-  color:#fff; font-weight:800; letter-spacing:.2px;
-  border-radius:12px; padding:10px 18px; cursor:pointer;
-  box-shadow:0 6px 18px rgba(14,92,214,.25);
+  appearance: none;
+  border: 1px solid #0e5cd6;
+  background: #0e5cd6;
+  color: #fff;
+  font-weight: 800;
+  border-radius: 14px;
+  padding: 10px 18px;
+  font-size: clamp(14px, 2.6vw, 16px);
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(14,92,214,.25);
 }
-.btn:disabled { opacity:.6; cursor:not-allowed; }
+.btn:disabled { opacity: .6; cursor: not-allowed; }
 
-/* ——— Overlay envío/gracias ——— */
+/* Overlay envío / gracias (permanente en éxito) */
 .overlay {
   position: fixed; inset: 0; background: #ffffff;
   display: none; align-items: center; justify-content: center; z-index: 1000;
 }
 .overlay.show { display: flex; }
 .overlay-box {
-  width: min(720px, 92vw); min-height: 220px;
-  border-radius: 18px; border: 1px solid #e6e9f0;
-  background: #fff; box-shadow: 0 14px 42px rgba(0,0,0,.18);
-  padding: 28px 30px; display: flex; align-items: center; justify-content: center; gap: 16px;
+  width: min(720px, 92vw);
+  min-height: 220px;
+  border-radius: 20px;
+  border: 1px solid #e6e9f0;
+  background: #fff;
+  box-shadow: 0 14px 42px rgba(0,0,0,.18);
+  padding: 28px 30px;
+  display: flex; align-items: center; justify-content: center; gap: 16px;
 }
-.overlay-box.success { background: #d32f2f; color: #fff; border-color: transparent; }
-.overlay-msg { font-size: 1.35rem; font-weight: 800; text-align: center; }
+.overlay-box.success { background: #d32f2f; color: #ffffff; border-color: transparent; }
+.overlay-msg { font-size: clamp(18px, 3.2vw, 22px); font-weight: 800; text-align: center; }
 
 /* Spinner */
 .spinner {
@@ -101,12 +142,11 @@ html, body {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ——— Ajustes para pantallas muy pequeñas (seguir sin scroll) ——— */
-@media (max-width: 880px) {
-  .fields { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 420px), (max-height: 560px) {
-  .card { height: min(520px, 96dvh); }
-  .fields { grid-template-columns: 1fr; }
+/* Ajustes extremos para pantallas muy pequeñas: sigue sin scroll */
+@media (max-height: 620px) {
+  .panel { height: 96dvh; }
   .stars label { font-size: 20px; }
+}
+@media (max-width: 380px) {
+  .fields { grid-template-columns: 1fr; }
 }
