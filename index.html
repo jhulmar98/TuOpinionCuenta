@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="card" id="card">
+  <div class="card">
     <h1>Tu Opinión Cuenta</h1>
 
     <!-- Campos universales (texto primero) -->
@@ -76,7 +76,6 @@
       </div>
     </div>
 
-    <!-- Botón para guardar -->
     <div class="row" style="margin-top:14px">
       <button id="enviarBtn" class="btn btn-primary">Enviar calificación</button>
     </div>
@@ -87,12 +86,9 @@
   </div>
 </div>
 
-<!-- Mensaje de gracias / bloqueo -->
-<div id="thanks" class="thanks" hidden>
-  <div class="thanks-card">
-    <h2>¡Gracias por su apoyo!</h2>
-    <p>Su calificación fue registrada.</p>
-  </div>
+<!-- Mensaje de agradecimiento (fondo blanco + cuadro rojo) -->
+<div id="ack" class="ack">
+  <div class="ack-box">¡Gracias por su calificación!</div>
 </div>
 
 <!-- Firebase + Firestore -->
@@ -113,43 +109,45 @@
   };
 
   const app = initializeApp(firebaseConfig);
-  try { getAnalytics(app); } catch (_) {} // opcional
+  try { getAnalytics(app); } catch (_) {}
   const db = getFirestore(app);
 
+  // Helpers
   const $ = (s) => document.querySelector(s);
-
-  function parseHashPrefill() {
-    const href = location.href;
-    const i = href.indexOf("#");
+  const getFaceValue = (name) => {
+    const el = document.querySelector(`input[name="${name}"]:checked`);
+    return el ? Number(el.value) : 0;
+  };
+  const parseHashPrefill = () => {
+    const i = location.href.indexOf("#");
     if (i < 0) return;
-    let frag = decodeURIComponent(href.slice(i + 1)).trim();
+    let frag = decodeURIComponent(location.href.slice(i + 1)).trim();
     let parts = frag.split("|");
     if (parts.length < 3) parts = frag.split(",");
     const [placa="", ident="", sector=""] = parts.map(s => s.trim());
     if (placa && !$("#placaInput").value) $("#placaInput").value = placa;
     if (ident && !$("#vehiculoInput").value) $("#vehiculoInput").value = ident;
     if (sector && !$("#sectorInput").value) $("#sectorInput").value = sector;
-  }
+  };
 
-  function getFaceValue(group) {
-    const el = document.querySelector(`input[name="${group}"]:checked`);
-    return el ? Number(el.value) : 0;
-  }
-
-  function disableAll() {
-    document.querySelectorAll("input, button").forEach(el => el.disabled = true);
-  }
-
-  function showThanksAndBlock() {
-    $("#thanks").hidden = false;
-    disableAll();
-    // Intentar cerrar la ventana si fue abierta por script (no siempre es posible)
-    try { window.close(); } catch(_) {}
-    // Marcar en localStorage para bloquear reenvíos en recarga
-    localStorage.setItem("encuesta_enviada", "1");
+  // Agradecimiento (5s) y antirebote
+  let cooldown = false;
+  function showAck5s() {
+    const ack = $("#ack");
+    ack.classList.add("show");
+    const btn = $("#enviarBtn");
+    btn.disabled = true;        // evita duplicados
+    cooldown = true;
+    setTimeout(() => {
+      ack.classList.remove("show");
+      btn.disabled = false;
+      cooldown = false;
+    }, 5000);
   }
 
   async function guardar() {
+    if (cooldown) return; // evita doble click rápido
+
     const placa = $("#placaInput").value.trim();
     const ident = $("#vehiculoInput").value.trim();
     const sector = $("#sectorInput").value.trim();
@@ -178,12 +176,7 @@
       placa_dni: placa,
       identificador: ident,
       sector_cargo: sector,
-      calificaciones: {
-        presentacion: r1,
-        limpieza: r2,
-        rapidez: r3,
-        solucion: r4
-      },
+      calificaciones: { presentacion: r1, limpieza: r2, rapidez: r3, solucion: r4 },
       fecha, hora,
       timestamp: serverTimestamp(),
       timestamp_ms
@@ -191,31 +184,19 @@
 
     try {
       await addDoc(collection(db, "encuestas"), payload);
-      // Mensaje y bloqueo
-      showThanksAndBlock();
+      showAck5s(); // mensaje 5 segundos, sin cerrar nada
     } catch (e) {
       console.error(e);
       alert("No se pudo guardar. Revisa tu conexión e inténtalo de nuevo.");
     }
   }
 
-  // Bloqueo si ya se envió antes (misma pestaña/navegador)
-  function checkAlreadySubmitted() {
-    if (localStorage.getItem("encuesta_enviada") === "1") {
-      showThanksAndBlock();
-    }
-  }
-
   // Init
   window.addEventListener("DOMContentLoaded", () => {
-    parseHashPrefill();   // opcional: si viene #... lo usa, pero puedes escribir manualmente
-    checkAlreadySubmitted();
+    parseHashPrefill();
     $("#enviarBtn").addEventListener("click", guardar);
   });
-
   window.addEventListener("hashchange", parseHashPrefill);
 </script>
-
-<div id="toast" class="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
