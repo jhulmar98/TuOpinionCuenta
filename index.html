@@ -3,31 +3,38 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Ficha de Atención</title>
+<title>Tu Opinión Cuenta</title>
 <link rel="stylesheet" href="styles.css">
+
+<!-- Lector QR -->
+<script src="https://unpkg.com/html5-qrcode" defer></script>
 </head>
 <body>
 <div class="wrap">
   <div class="card">
-    <h1>Ficha de Atención</h1>
+    <h1>Tu Opinión Cuenta</h1>
 
-    <!-- Datos del carro -->
+    <!-- Campos universales -->
     <div class="grid">
       <div class="kpi">
-        <div class="lbl">🚗 Vehículo</div>
-        <div id="vehiculo" class="val">—</div>
+        <div class="lbl">🔖 Placa / DNI</div>
+        <input id="placaInput" class="input" type="text" placeholder="Placa del vehículo o DNI del sereno">
       </div>
       <div class="kpi">
-        <div class="lbl">🔖 Placa</div>
-        <div id="placa" class="val">—</div>
+        <div class="lbl">🪪 Identificador</div>
+        <input id="vehiculoInput" class="input" type="text" placeholder="Nombre del sereno o Tipo de vehículo">
       </div>
       <div class="kpi">
-        <div class="lbl">📍 Sector</div>
-        <div id="sector" class="val">—</div>
+        <div class="lbl">🏷️ Sector / Cargo</div>
+        <input id="sectorInput" class="input" type="text" placeholder="Sector del vehículo o Cargo del sereno">
       </div>
     </div>
 
-    <!-- Preguntas con estrellas -->
+    <div class="row">
+      <button id="scanBtn" class="btn btn-ghost">📷 Escanear QR (opcional)</button>
+    </div>
+
+    <!-- Calificación -->
     <div class="rate">
       <h2 class="sec">⭐ Calificación del servicio</h2>
 
@@ -76,52 +83,36 @@
       </div>
     </div>
 
-    <!-- Botón para guardar -->
     <div class="row" style="margin-top:14px">
       <button id="enviarBtn" class="btn btn-primary">💾 Enviar calificación</button>
     </div>
 
     <div class="hint">
-      Añade al final de la URL <br>
-      <code>#Camioneta 40 49|EUE 519|SECTOR 1</code>
+      El QR puede traer: <code>PLACA_O_DNI|IDENTIFICADOR|SECTOR_O_CARGO</code> (o con comas).<br>
+      También puedes abrir con: <code>#PLACA|IDENTIFICADOR|SECTOR</code>
     </div>
   </div>
 </div>
 
-<script>
-  // Lee "Vehículo, Placa, Sector" desde el fragmento de la URL (#…)
-  function parseHash() {
-    const frag = decodeURIComponent(location.hash.startsWith('#') ? location.hash.slice(1) : location.hash).trim();
-    if (!frag) return { vehiculo:"—", placa:"—", sector:"—" };
-    let parts = frag.split('|');
-    if (parts.length < 3) parts = frag.split(',');
-    const [vehiculo="", placa="", sector=""] = parts.map(s => s.trim());
-    return { vehiculo: vehiculo || "—", placa: placa || "—", sector: sector || "—" };
-  }
+<!-- Modal del escáner -->
+<div id="qr-box" class="qrbox" style="display:none;">
+  <div class="qrcard">
+    <div class="qrheader">
+      <strong>Escanear QR</strong>
+      <button id="closeScan" class="btn btn-ghost">✖</button>
+    </div>
+    <div id="qr-reader" style="width: 100%;"></div>
+    <div class="hint">Enfoca el código QR; al detectar, se rellenarán los campos.</div>
+  </div>
+</div>
 
-  function render() {
-    const { vehiculo, placa, sector } = parseHash();
-    document.getElementById('vehiculo').textContent = vehiculo;
-    document.getElementById('placa').textContent   = placa;
-    document.getElementById('sector').textContent  = sector;
-  }
-
-  function getRating(name){
-    const el = document.querySelector(`input[name="${name}"]:checked`);
-    return el ? Number(el.value) : 0;
-  }
-
-  addEventListener('hashchange', render);
-  addEventListener('DOMContentLoaded', render);
-</script>
-
-<!-- Firebase + Firestore -->
+<!-- Firebase + lógica -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  // Config de tu proyecto
+  // Tu config
   const firebaseConfig = {
     apiKey: "AIzaSyAzqBW_0QduNdRk2lHFzgh8cOqHOzCRq8A",
     authDomain: "tu-opinion-importa-msi.firebaseapp.com",
@@ -132,64 +123,115 @@
     measurementId: "G-ZM3EM2Z4W7"
   };
 
-  // Inicializar Firebase
   const app = initializeApp(firebaseConfig);
   try { getAnalytics(app); } catch (_) {}
   const db = getFirestore(app);
 
-  // Click para guardar
-  document.getElementById("enviarBtn").addEventListener("click", async () => {
-    const vehiculo = document.getElementById('vehiculo').textContent.trim();
-    const placa    = document.getElementById('placa').textContent.trim();
-    const sector   = document.getElementById('sector').textContent.trim();
+  // Helpers
+  const $ = (s) => document.querySelector(s);
+  const getRating = (name) => {
+    const r = document.querySelector(`input[name="${name}"]:checked`);
+    return r ? Number(r.value) : 0;
+  };
+  const parsePayload = (raw) => {
+    if (!raw) return { placa:"", vehiculo:"", sector:"" };
+    let frag = raw.trim();
+    const i = frag.indexOf("#");
+    if (i >= 0 && i < frag.length - 1) frag = decodeURIComponent(frag.slice(i + 1));
+    let parts = frag.split("|");
+    if (parts.length < 3) parts = frag.split(",");
+    const [placa="", vehiculo="", sector=""] = parts.map(s => s.trim());
+    return { placa, vehiculo, sector };
+  };
 
+  // Prefill desde #... si existe (sin bloquear edición)
+  function prefillFromHashOnce() {
+    const { placa, vehiculo, sector } = parsePayload(location.href);
+    if (!$("#placaInput").value)   $("#placaInput").value = placa;
+    if (!$("#vehiculoInput").value)$("#vehiculoInput").value = vehiculo;
+    if (!$("#sectorInput").value)  $("#sectorInput").value = sector;
+  }
+
+  // Guardar
+  async function guardar() {
+    const placa = $("#placaInput").value.trim();
+    const vehiculo = $("#vehiculoInput").value.trim();
+    const sector = $("#sectorInput").value.trim();
     const presentacion = getRating("rating1");
     const limpieza     = getRating("rating2");
     const rapidez      = getRating("rating3");
     const solucion     = getRating("rating4");
 
-    // Validaciones básicas
-    if (vehiculo === "—" || placa === "—" || sector === "—") {
-      alert("Completa Vehículo, Placa y Sector (pasa los datos en la URL o escanea).");
-      return;
-    }
-    if (!presentacion || !limpieza || !rapidez || !solucion) {
-      alert("Responde todas las preguntas de calificación.");
-      return;
-    }
+    const errores = [];
+    if (!placa) errores.push("Placa / DNI es obligatorio.");
+    if (!vehiculo) errores.push("Identificador es obligatorio.");
+    if (!sector) errores.push("Sector / Cargo es obligatorio.");
+    if (!presentacion || !limpieza || !rapidez || !solucion) errores.push("Responde todas las preguntas.");
 
-    // Fecha/hora local de Lima y timestamps
+    if (errores.length) { alert(errores.join("\n")); return; }
+
+    // Tiempo local Lima + timestamps
     const tz = "America/Lima";
     const now = new Date();
-    const fecha = new Intl.DateTimeFormat("es-PE", {year:"numeric", month:"2-digit", day:"2-digit", timeZone: tz}).format(now);
-    const hora  = new Intl.DateTimeFormat("es-PE", {hour:"2-digit", minute:"2-digit", second:"2-digit", hour12:true, timeZone: tz}).format(now);
-    const timestamp_ms = now.getTime(); // número epoch en ms
+    const fecha = new Intl.DateTimeFormat("es-PE",{year:"numeric",month:"2-digit",day:"2-digit", timeZone:tz}).format(now);
+    const hora  = new Intl.DateTimeFormat("es-PE",{hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true,timeZone:tz}).format(now);
+    const timestamp_ms = now.getTime();
 
     const payload = {
-      vehiculo, placa, sector,
-      calificaciones: { presentacion, limpieza, rapidez, solucion },
-      fecha,                 // p.ej. 11/09/2025
-      hora,                  // p.ej. 12:56:02 p. m.
-      timestamp: serverTimestamp(), // sello del servidor (Firestore)
-      
+      placa_dni: placa,
+      identificador: vehiculo,     // nombre sereno o tipo de vehículo
+      sector_cargo: sector,        // sector vehículo o cargo sereno
+      calificaciones: {
+        presentacion, limpieza, rapidez, solucion
+      },
+      fecha, hora,
+      timestamp: serverTimestamp(),
+      timestamp_ms
     };
 
     try {
       await addDoc(collection(db, "encuestas"), payload);
       alert("¡Muchas gracias! Tu calificación fue registrada.");
-      // Limpia selecciones (opcional)
-      document.querySelectorAll('input[type=\"radio\"]').forEach(el => el.checked = false);
+      document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
+      // Si quieres limpiar campos de texto, descomenta:
+      // $("#placaInput").value = ""; $("#vehiculoInput").value = ""; $("#sectorInput").value = "";
     } catch (e) {
       console.error(e);
       alert("No se pudo guardar. Revisa tu conexión e inténtalo de nuevo.");
     }
-  });
-
-  // Re-usa la función del script no-module
-  function getRating(name){
-    const el = document.querySelector(`input[name="${name}"]:checked`);
-    return el ? Number(el.value) : 0;
   }
+
+  // QR Scanner
+  let scanner = null;
+  function abrirScanner() {
+    $("#qr-box").style.display = "grid";
+    if (!scanner) {
+      scanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 250, rememberLastUsedCamera: true, showTorchButtonIfSupported: true });
+      scanner.render(onScanSuccess, () => {});
+    }
+  }
+  async function cerrarScanner() {
+    $("#qr-box").style.display = "none";
+    if (scanner) { try { await scanner.clear(); } catch(_) {} scanner = null; $("#qr-reader").innerHTML=""; }
+  }
+  function onScanSuccess(text) {
+    const { placa, vehiculo, sector } = parsePayload(text);
+    if (placa)   $("#placaInput").value = placa;
+    if (vehiculo)$("#vehiculoInput").value = vehiculo;
+    if (sector)  $("#sectorInput").value = sector;
+    cerrarScanner();
+  }
+
+  // Eventos
+  window.addEventListener("DOMContentLoaded", () => {
+    prefillFromHashOnce();
+    $("#scanBtn").addEventListener("click", abrirScanner);
+    $("#closeScan").addEventListener("click", cerrarScanner);
+    $("#enviarBtn").addEventListener("click", guardar);
+  });
 </script>
+
+<!-- Toast (opcional si usas estilos .toast) -->
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
