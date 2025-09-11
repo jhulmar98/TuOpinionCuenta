@@ -1,0 +1,73 @@
+/* Tema claro */
+:root {
+  --bg:#f7f9fc;
+  --card:#ffffff;
+  --text:#0b1220;
+  --muted:#4b5563;
+  --accent:#0057d9;
+  --border:#e5e7eb;
+  --star:#f5b301;   /* dorado */
+  --star-muted:#d1d5db;
+}
+
+html,body{
+  margin:0; padding:0; background:var(--bg); color:var(--text);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif
+}
+.wrap{max-width:900px;margin:24px auto;padding:16px}
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:0 8px 30px rgba(2,6,23,.06);
+  padding:20px
+}
+h1{font-size:1.4rem;margin:0 0 8px}
+.sec{font-size:1.08rem;margin:18px 0 8px}
+.sub{color:var(--muted);font-size:.95rem;margin-bottom:16px}
+
+/* Datos del carro */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.kpi{
+  background:#fafbff;
+  border:1px solid var(--border);
+  border-radius:12px; padding:14px
+}
+.lbl{color:var(--muted);font-size:.8rem;margin-bottom:6px}
+.val{font-weight:700;font-size:1.06rem;word-break:break-word}
+
+/* Bloques de preguntas */
+.qblock{margin:14px 0 10px}
+.qlabel{margin-bottom:8px}
+
+/* Estrellitas (sin duplicados) */
+.stars{
+  display:inline-flex;
+  gap:8px;
+  direction: rtl;           /* para que al pasar el mouse pinte hacia la izquierda */
+  user-select:none
+}
+.stars input{display:none}
+.stars label{
+  font-size:28px; line-height:1; cursor:pointer;
+  color:var(--star-muted);
+  transition:transform .12s, color .12s, text-shadow .12s;
+}
+/* resalta al pasar el mouse */
+.stars label:hover,
+.stars label:hover ~ label{
+  color:var(--star);
+  text-shadow:0 0 0.5px var(--star);
+  transform:translateY(-1px) scale(1.05);
+}
+/* estado seleccionado */
+.stars input:checked ~ label{
+  color:var(--star);
+  text-shadow:0 0 0.5px var(--star);
+}
+
+/* Nota: no usamos ::before, así evitamos "doble estrella" */
+
+.hint{color:var(--muted);font-size:.88rem;margin-top:12px}
+
+@media (max-width:720px){ .grid{grid-template-columns:1fr} }
