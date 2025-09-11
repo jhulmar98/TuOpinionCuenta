@@ -5,16 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Tu Opinión Cuenta</title>
 <link rel="stylesheet" href="styles.css">
-
-<!-- Lector QR -->
-<script src="https://unpkg.com/html5-qrcode" defer></script>
 </head>
 <body>
 <div class="wrap">
-  <div class="card">
+  <div class="card" id="card">
     <h1>Tu Opinión Cuenta</h1>
 
-    <!-- Campos universales -->
+    <!-- Campos universales (texto primero) -->
     <div class="grid">
       <div class="kpi">
         <div class="lbl">🔖 Placa / DNI</div>
@@ -30,89 +27,81 @@
       </div>
     </div>
 
-    <div class="row">
-      <button id="scanBtn" class="btn btn-ghost">📷 Escanear QR (opcional)</button>
-    </div>
-
-    <!-- Calificación -->
+    <!-- Calificación con caritas -->
     <div class="rate">
-      <h2 class="sec">⭐ Calificación del servicio</h2>
+      <h2 class="sec">Calificación del servicio</h2>
 
       <div class="qblock">
         <div class="qlabel">1. Presentación personal</div>
-        <div class="stars">
-          <input type="radio" name="rating1" id="r1_5" value="5"><label for="r1_5">★</label>
-          <input type="radio" name="rating1" id="r1_4" value="4"><label for="r1_4">★</label>
-          <input type="radio" name="rating1" id="r1_3" value="3"><label for="r1_3">★</label>
-          <input type="radio" name="rating1" id="r1_2" value="2"><label for="r1_2">★</label>
-          <input type="radio" name="rating1" id="r1_1" value="1"><label for="r1_1">★</label>
+        <div class="faces" aria-label="Calificar presentación personal">
+          <input type="radio" name="rating1" id="r1_1" value="1"><label for="r1_1" title="Muy mal">😭</label>
+          <input type="radio" name="rating1" id="r1_2" value="2"><label for="r1_2" title="Mal">😢</label>
+          <input type="radio" name="rating1" id="r1_3" value="3"><label for="r1_3" title="Regular">😐</label>
+          <input type="radio" name="rating1" id="r1_4" value="4"><label for="r1_4" title="Bien">🙂</label>
+          <input type="radio" name="rating1" id="r1_5" value="5"><label for="r1_5" title="Excelente">😄</label>
         </div>
       </div>
 
       <div class="qblock">
         <div class="qlabel">2. Limpieza del vehículo</div>
-        <div class="stars">
-          <input type="radio" name="rating2" id="r2_5" value="5"><label for="r2_5">★</label>
-          <input type="radio" name="rating2" id="r2_4" value="4"><label for="r2_4">★</label>
-          <input type="radio" name="rating2" id="r2_3" value="3"><label for="r2_3">★</label>
-          <input type="radio" name="rating2" id="r2_2" value="2"><label for="r2_2">★</label>
-          <input type="radio" name="rating2" id="r2_1" value="1"><label for="r2_1">★</label>
+        <div class="faces" aria-label="Calificar limpieza">
+          <input type="radio" name="rating2" id="r2_1" value="1"><label for="r2_1">😭</label>
+          <input type="radio" name="rating2" id="r2_2" value="2"><label for="r2_2">😢</label>
+          <input type="radio" name="rating2" id="r2_3" value="3"><label for="r2_3">😐</label>
+          <input type="radio" name="rating2" id="r2_4" value="4"><label for="r2_4">🙂</label>
+          <input type="radio" name="rating2" id="r2_5" value="5"><label for="r2_5">😄</label>
         </div>
       </div>
 
       <div class="qblock">
         <div class="qlabel">3. ¿Llegó rápido?</div>
-        <div class="stars">
-          <input type="radio" name="rating3" id="r3_5" value="5"><label for="r3_5">★</label>
-          <input type="radio" name="rating3" id="r3_4" value="4"><label for="r3_4">★</label>
-          <input type="radio" name="rating3" id="r3_3" value="3"><label for="r3_3">★</label>
-          <input type="radio" name="rating3" id="r3_2" value="2"><label for="r3_2">★</label>
-          <input type="radio" name="rating3" id="r3_1" value="1"><label for="r3_1">★</label>
+        <div class="faces" aria-label="Calificar rapidez">
+          <input type="radio" name="rating3" id="r3_1" value="1"><label for="r3_1">😭</label>
+          <input type="radio" name="rating3" id="r3_2" value="2"><label for="r3_2">😢</label>
+          <input type="radio" name="rating3" id="r3_3" value="3"><label for="r3_3">😐</label>
+          <input type="radio" name="rating3" id="r3_4" value="4"><label for="r3_4">🙂</label>
+          <input type="radio" name="rating3" id="r3_5" value="5"><label for="r3_5">😄</label>
         </div>
       </div>
 
       <div class="qblock">
         <div class="qlabel">4. ¿Solucionó el problema?</div>
-        <div class="stars">
-          <input type="radio" name="rating4" id="r4_5" value="5"><label for="r4_5">★</label>
-          <input type="radio" name="rating4" id="r4_4" value="4"><label for="r4_4">★</label>
-          <input type="radio" name="rating4" id="r4_3" value="3"><label for="r4_3">★</label>
-          <input type="radio" name="rating4" id="r4_2" value="2"><label for="r4_2">★</label>
-          <input type="radio" name="rating4" id="r4_1" value="1"><label for="r4_1">★</label>
+        <div class="faces" aria-label="Calificar solución">
+          <input type="radio" name="rating4" id="r4_1" value="1"><label for="r4_1">😭</label>
+          <input type="radio" name="rating4" id="r4_2" value="2"><label for="r4_2">😢</label>
+          <input type="radio" name="rating4" id="r4_3" value="3"><label for="r4_3">😐</label>
+          <input type="radio" name="rating4" id="r4_4" value="4"><label for="r4_4">🙂</label>
+          <input type="radio" name="rating4" id="r4_5" value="5"><label for="r4_5">😄</label>
         </div>
       </div>
     </div>
 
+    <!-- Botón para guardar -->
     <div class="row" style="margin-top:14px">
-      <button id="enviarBtn" class="btn btn-primary">💾 Enviar calificación</button>
+      <button id="enviarBtn" class="btn btn-primary">Enviar calificación</button>
     </div>
 
     <div class="hint">
-      El QR puede traer: <code>PLACA_O_DNI|IDENTIFICADOR|SECTOR_O_CARGO</code> (o con comas).<br>
-      También puedes abrir con: <code>#PLACA|IDENTIFICADOR|SECTOR</code>
+      (Opcional) Si abres con <code>#PLACA|IDENTIFICADOR|SECTOR</code>, se llenan los campos; pero puedes escribirlos manualmente.
     </div>
   </div>
 </div>
 
-<!-- Modal del escáner -->
-<div id="qr-box" class="qrbox" style="display:none;">
-  <div class="qrcard">
-    <div class="qrheader">
-      <strong>Escanear QR</strong>
-      <button id="closeScan" class="btn btn-ghost">✖</button>
-    </div>
-    <div id="qr-reader" style="width: 100%;"></div>
-    <div class="hint">Enfoca el código QR; al detectar, se rellenarán los campos.</div>
+<!-- Mensaje de gracias / bloqueo -->
+<div id="thanks" class="thanks" hidden>
+  <div class="thanks-card">
+    <h2>¡Gracias por su apoyo!</h2>
+    <p>Su calificación fue registrada.</p>
   </div>
 </div>
 
-<!-- Firebase + lógica -->
+<!-- Firebase + Firestore -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  // Tu config
+  // Config de tu proyecto
   const firebaseConfig = {
     apiKey: "AIzaSyAzqBW_0QduNdRk2lHFzgh8cOqHOzCRq8A",
     authDomain: "tu-opinion-importa-msi.firebaseapp.com",
@@ -124,49 +113,57 @@
   };
 
   const app = initializeApp(firebaseConfig);
-  try { getAnalytics(app); } catch (_) {}
+  try { getAnalytics(app); } catch (_) {} // opcional
   const db = getFirestore(app);
 
-  // Helpers
   const $ = (s) => document.querySelector(s);
-  const getRating = (name) => {
-    const r = document.querySelector(`input[name="${name}"]:checked`);
-    return r ? Number(r.value) : 0;
-  };
-  const parsePayload = (raw) => {
-    if (!raw) return { placa:"", vehiculo:"", sector:"" };
-    let frag = raw.trim();
-    const i = frag.indexOf("#");
-    if (i >= 0 && i < frag.length - 1) frag = decodeURIComponent(frag.slice(i + 1));
+
+  function parseHashPrefill() {
+    const href = location.href;
+    const i = href.indexOf("#");
+    if (i < 0) return;
+    let frag = decodeURIComponent(href.slice(i + 1)).trim();
     let parts = frag.split("|");
     if (parts.length < 3) parts = frag.split(",");
-    const [placa="", vehiculo="", sector=""] = parts.map(s => s.trim());
-    return { placa, vehiculo, sector };
-  };
-
-  // Prefill desde #... si existe (sin bloquear edición)
-  function prefillFromHashOnce() {
-    const { placa, vehiculo, sector } = parsePayload(location.href);
-    if (!$("#placaInput").value)   $("#placaInput").value = placa;
-    if (!$("#vehiculoInput").value)$("#vehiculoInput").value = vehiculo;
-    if (!$("#sectorInput").value)  $("#sectorInput").value = sector;
+    const [placa="", ident="", sector=""] = parts.map(s => s.trim());
+    if (placa && !$("#placaInput").value) $("#placaInput").value = placa;
+    if (ident && !$("#vehiculoInput").value) $("#vehiculoInput").value = ident;
+    if (sector && !$("#sectorInput").value) $("#sectorInput").value = sector;
   }
 
-  // Guardar
+  function getFaceValue(group) {
+    const el = document.querySelector(`input[name="${group}"]:checked`);
+    return el ? Number(el.value) : 0;
+  }
+
+  function disableAll() {
+    document.querySelectorAll("input, button").forEach(el => el.disabled = true);
+  }
+
+  function showThanksAndBlock() {
+    $("#thanks").hidden = false;
+    disableAll();
+    // Intentar cerrar la ventana si fue abierta por script (no siempre es posible)
+    try { window.close(); } catch(_) {}
+    // Marcar en localStorage para bloquear reenvíos en recarga
+    localStorage.setItem("encuesta_enviada", "1");
+  }
+
   async function guardar() {
     const placa = $("#placaInput").value.trim();
-    const vehiculo = $("#vehiculoInput").value.trim();
+    const ident = $("#vehiculoInput").value.trim();
     const sector = $("#sectorInput").value.trim();
-    const presentacion = getRating("rating1");
-    const limpieza     = getRating("rating2");
-    const rapidez      = getRating("rating3");
-    const solucion     = getRating("rating4");
+
+    const r1 = getFaceValue("rating1");
+    const r2 = getFaceValue("rating2");
+    const r3 = getFaceValue("rating3");
+    const r4 = getFaceValue("rating4");
 
     const errores = [];
     if (!placa) errores.push("Placa / DNI es obligatorio.");
-    if (!vehiculo) errores.push("Identificador es obligatorio.");
+    if (!ident) errores.push("Identificador es obligatorio.");
     if (!sector) errores.push("Sector / Cargo es obligatorio.");
-    if (!presentacion || !limpieza || !rapidez || !solucion) errores.push("Responde todas las preguntas.");
+    if (!r1 || !r2 || !r3 || !r4) errores.push("Responda todas las preguntas.");
 
     if (errores.length) { alert(errores.join("\n")); return; }
 
@@ -179,10 +176,13 @@
 
     const payload = {
       placa_dni: placa,
-      identificador: vehiculo,     // nombre sereno o tipo de vehículo
-      sector_cargo: sector,        // sector vehículo o cargo sereno
+      identificador: ident,
+      sector_cargo: sector,
       calificaciones: {
-        presentacion, limpieza, rapidez, solucion
+        presentacion: r1,
+        limpieza: r2,
+        rapidez: r3,
+        solucion: r4
       },
       fecha, hora,
       timestamp: serverTimestamp(),
@@ -191,47 +191,31 @@
 
     try {
       await addDoc(collection(db, "encuestas"), payload);
-      alert("¡Muchas gracias! Tu calificación fue registrada.");
-      document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
-      // Si quieres limpiar campos de texto, descomenta:
-      // $("#placaInput").value = ""; $("#vehiculoInput").value = ""; $("#sectorInput").value = "";
+      // Mensaje y bloqueo
+      showThanksAndBlock();
     } catch (e) {
       console.error(e);
       alert("No se pudo guardar. Revisa tu conexión e inténtalo de nuevo.");
     }
   }
 
-  // QR Scanner
-  let scanner = null;
-  function abrirScanner() {
-    $("#qr-box").style.display = "grid";
-    if (!scanner) {
-      scanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 250, rememberLastUsedCamera: true, showTorchButtonIfSupported: true });
-      scanner.render(onScanSuccess, () => {});
+  // Bloqueo si ya se envió antes (misma pestaña/navegador)
+  function checkAlreadySubmitted() {
+    if (localStorage.getItem("encuesta_enviada") === "1") {
+      showThanksAndBlock();
     }
   }
-  async function cerrarScanner() {
-    $("#qr-box").style.display = "none";
-    if (scanner) { try { await scanner.clear(); } catch(_) {} scanner = null; $("#qr-reader").innerHTML=""; }
-  }
-  function onScanSuccess(text) {
-    const { placa, vehiculo, sector } = parsePayload(text);
-    if (placa)   $("#placaInput").value = placa;
-    if (vehiculo)$("#vehiculoInput").value = vehiculo;
-    if (sector)  $("#sectorInput").value = sector;
-    cerrarScanner();
-  }
 
-  // Eventos
+  // Init
   window.addEventListener("DOMContentLoaded", () => {
-    prefillFromHashOnce();
-    $("#scanBtn").addEventListener("click", abrirScanner);
-    $("#closeScan").addEventListener("click", cerrarScanner);
+    parseHashPrefill();   // opcional: si viene #... lo usa, pero puedes escribir manualmente
+    checkAlreadySubmitted();
     $("#enviarBtn").addEventListener("click", guardar);
   });
+
+  window.addEventListener("hashchange", parseHashPrefill);
 </script>
 
-<!-- Toast (opcional si usas estilos .toast) -->
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
