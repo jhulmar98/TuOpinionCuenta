@@ -86,9 +86,12 @@
   </div>
 </div>
 
-<!-- Mensaje de agradecimiento (fondo blanco + cuadro rojo) -->
-<div id="ack" class="ack">
-  <div class="ack-box">¡Gracias por su calificación!</div>
+<!-- Overlay: envío / gracias -->
+<div id="overlay" class="overlay">
+  <div id="overlayBox" class="overlay-box">
+    <div id="spinner" class="spinner" aria-hidden="true"></div>
+    <div id="overlayMsg" class="overlay-msg">Se está enviando su respuesta…</div>
+  </div>
 </div>
 
 <!-- Firebase + Firestore -->
@@ -130,28 +133,33 @@
     if (sector && !$("#sectorInput").value) $("#sectorInput").value = sector;
   };
 
-  // Agradecimiento (5s) y antirebote
-  let cooldown = false;
-  function showAck5s() {
-    const ack = $("#ack");
-    ack.classList.add("show");
-    const btn = $("#enviarBtn");
-    btn.disabled = true;        // evita duplicados
-    cooldown = true;
-    setTimeout(() => {
-      ack.classList.remove("show");
-      btn.disabled = false;
-      cooldown = false;
-    }, 5000);
+  // Overlay states
+  function showSending() {
+    const overlay = $("#overlay");
+    const box = $("#overlayBox");
+    $("#spinner").style.display = "inline-block";
+    $("#overlayMsg").textContent = "Se está enviando su respuesta…";
+    box.classList.remove("success");
+    overlay.classList.add("show");
   }
 
+  function showThanks5s() {
+    const overlay = $("#overlay");
+    const box = $("#overlayBox");
+    // Cambiar a estado éxito (rojo con letras blancas, sin spinner)
+    $("#spinner").style.display = "none";
+    $("#overlayMsg").textContent = "¡Gracias por su calificación!";
+    box.classList.add("success");
+    // Mantener 5s y luego ocultar
+    setTimeout(() => overlay.classList.remove("show"), 5000);
+  }
+
+  let sending = false;
   async function guardar() {
-    if (cooldown) return; // evita doble click rápido
-
-    const placa = $("#placaInput").value.trim();
-    const ident = $("#vehiculoInput").value.trim();
+    if (sending) return; // antirebote
+    const placa  = $("#placaInput").value.trim();
+    const ident  = $("#vehiculoInput").value.trim();
     const sector = $("#sectorInput").value.trim();
-
     const r1 = getFaceValue("rating1");
     const r2 = getFaceValue("rating2");
     const r3 = getFaceValue("rating3");
@@ -162,7 +170,6 @@
     if (!ident) errores.push("Identificador es obligatorio.");
     if (!sector) errores.push("Sector / Cargo es obligatorio.");
     if (!r1 || !r2 || !r3 || !r4) errores.push("Responda todas las preguntas.");
-
     if (errores.length) { alert(errores.join("\n")); return; }
 
     // Tiempo local Lima + timestamps
@@ -183,11 +190,19 @@
     };
 
     try {
+      sending = true;
+      $("#enviarBtn").disabled = true;
+      showSending();
       await addDoc(collection(db, "encuestas"), payload);
-      showAck5s(); // mensaje 5 segundos, sin cerrar nada
+      showThanks5s();
     } catch (e) {
       console.error(e);
       alert("No se pudo guardar. Revisa tu conexión e inténtalo de nuevo.");
+      $("#overlay").classList.remove("show");
+      $("#enviarBtn").disabled = false;
+    } finally {
+      // Rehabilitar el botón después de los 5s del overlay de gracias
+      setTimeout(() => { sending = false; $("#enviarBtn").disabled = false; }, 5000);
     }
   }
 
