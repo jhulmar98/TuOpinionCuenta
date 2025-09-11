@@ -7,90 +7,82 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="wrap">
+<div class="shell">
   <div class="card">
-    <header class="header">
-      <h1>Tu Opinión Cuenta</h1>
-    </header>
+    <h1 class="title">Tu Opinión Cuenta</h1>
 
-    <!-- Datos (compacto, sin scroll) -->
-    <section class="grid grid-compact">
-      <div class="kpi">
-        <div class="lbl">👤 Nombre</div>
+    <!-- Datos (ultra-compacto) -->
+    <section class="fields">
+      <div class="field">
+        <label class="lbl">👤 Nombre</label>
         <input id="nombreInput" class="input" type="text" placeholder="Nombre y apellidos">
       </div>
-      <div class="kpi">
-        <div class="lbl">📞 Teléfono</div>
+      <div class="field">
+        <label class="lbl">📞 Teléfono</label>
         <input id="telefonoInput" class="input" type="tel" placeholder="Ingresa tu número">
       </div>
-      <div class="kpi">
-        <div class="lbl">🔖 Placa / DNI</div>
-        <input id="placaInput" class="input" type="text" placeholder="Placa del vehículo o DNI del sereno">
+      <div class="field">
+        <label class="lbl">🔖 Placa / DNI</label>
+        <input id="placaInput" class="input" type="text" placeholder="Placa o DNI">
       </div>
-      <div class="kpi">
-        <div class="lbl">🪪 Identificador</div>
+      <div class="field">
+        <label class="lbl">🪪 Identificador</label>
         <input id="vehiculoInput" class="input" type="text" placeholder="Nombre del sereno o Tipo de vehículo">
       </div>
-      <div class="kpi">
-        <div class="lbl">🏷️ Sector / Cargo</div>
-        <input id="sectorInput" class="input" type="text" placeholder="Sector del vehículo o Cargo del sereno">
+      <div class="field">
+        <label class="lbl">🏷️ Sector / Cargo</label>
+        <input id="sectorInput" class="input" type="text" placeholder="Sector o Cargo">
       </div>
     </section>
 
-    <!-- Ratings en grilla 2x2 para que todo quepa -->
-    <section class="rate">
-      <h2 class="sec">Calificación del servicio</h2>
-
-      <div class="ratings-grid">
-        <div class="qblock">
-          <div class="qlabel">1. Presentación personal</div>
-          <div class="stars" aria-label="Presentación personal">
-            <input type="radio" name="rating1" id="r1_5" value="5"><label for="r1_5">★</label>
-            <input type="radio" name="rating1" id="r1_4" value="4"><label for="r1_4">★</label>
-            <input type="radio" name="rating1" id="r1_3" value="3"><label for="r1_3">★</label>
-            <input type="radio" name="rating1" id="r1_2" value="2"><label for="r1_2">★</label>
-            <input type="radio" name="rating1" id="r1_1" value="1"><label for="r1_1">★</label>
-          </div>
+    <!-- Calificación (2×2) -->
+    <section class="ratings">
+      <div class="q">
+        <div class="qlabel">1. Presentación personal</div>
+        <div class="stars" aria-label="Presentación">
+          <input type="radio" name="r1" id="r1_5" value="5"><label for="r1_5">★</label>
+          <input type="radio" name="r1" id="r1_4" value="4"><label for="r1_4">★</label>
+          <input type="radio" name="r1" id="r1_3" value="3"><label for="r1_3">★</label>
+          <input type="radio" name="r1" id="r1_2" value="2"><label for="r1_2">★</label>
+          <input type="radio" name="r1" id="r1_1" value="1"><label for="r1_1">★</label>
         </div>
+      </div>
 
-        <div class="qblock">
-          <div class="qlabel">2. Limpieza del vehículo</div>
-          <div class="stars" aria-label="Limpieza del vehículo">
-            <input type="radio" name="rating2" id="r2_5" value="5"><label for="r2_5">★</label>
-            <input type="radio" name="rating2" id="r2_4" value="4"><label for="r2_4">★</label>
-            <input type="radio" name="rating2" id="r2_3" value="3"><label for="r2_3">★</label>
-            <input type="radio" name="rating2" id="r2_2" value="2"><label for="r2_2">★</label>
-            <input type="radio" name="rating2" id="r2_1" value="1"><label for="r2_1">★</label>
-          </div>
+      <div class="q">
+        <div class="qlabel">2. Limpieza del vehículo</div>
+        <div class="stars" aria-label="Limpieza">
+          <input type="radio" name="r2" id="r2_5" value="5"><label for="r2_5">★</label>
+          <input type="radio" name="r2" id="r2_4" value="4"><label for="r2_4">★</label>
+          <input type="radio" name="r2" id="r2_3" value="3"><label for="r2_3">★</label>
+          <input type="radio" name="r2" id="r2_2" value="2"><label for="r2_2">★</label>
+          <input type="radio" name="r2" id="r2_1" value="1"><label for="r2_1">★</label>
         </div>
+      </div>
 
-        <div class="qblock">
-          <div class="qlabel">3. ¿Llegó rápido?</div>
-          <div class="stars" aria-label="Rapidez">
-            <input type="radio" name="rating3" id="r3_5" value="5"><label for="r3_5">★</label>
-            <input type="radio" name="rating3" id="r3_4" value="4"><label for="r3_4">★</label>
-            <input type="radio" name="rating3" id="r3_3" value="3"><label for="r3_3">★</label>
-            <input type="radio" name="rating3" id="r3_2" value="2"><label for="r3_2">★</label>
-            <input type="radio" name="rating3" id="r3_1" value="1"><label for="r3_1">★</label>
-          </div>
+      <div class="q">
+        <div class="qlabel">3. ¿Llegó rápido?</div>
+        <div class="stars" aria-label="Rapidez">
+          <input type="radio" name="r3" id="r3_5" value="5"><label for="r3_5">★</label>
+          <input type="radio" name="r3" id="r3_4" value="4"><label for="r3_4">★</label>
+          <input type="radio" name="r3" id="r3_3" value="3"><label for="r3_3">★</label>
+          <input type="radio" name="r3" id="r3_2" value="2"><label for="r3_2">★</label>
+          <input type="radio" name="r3" id="r3_1" value="1"><label for="r3_1">★</label>
         </div>
+      </div>
 
-        <div class="qblock">
-          <div class="qlabel">4. ¿Solucionó el problema?</div>
-          <div class="stars" aria-label="Solución del problema">
-            <input type="radio" name="rating4" id="r4_5" value="5"><label for="r4_5">★</label>
-            <input type="radio" name="rating4" id="r4_4" value="4"><label for="r4_4">★</label>
-            <input type="radio" name="rating4" id="r4_3" value="3"><label for="r4_3">★</label>
-            <input type="radio" name="rating4" id="r4_2" value="2"><label for="r4_2">★</label>
-            <input type="radio" name="rating4" id="r4_1" value="1"><label for="r4_1">★</label>
-          </div>
+      <div class="q">
+        <div class="qlabel">4. ¿Solucionó el problema?</div>
+        <div class="stars" aria-label="Solución">
+          <input type="radio" name="r4" id="r4_5" value="5"><label for="r4_5">★</label>
+          <input type="radio" name="r4" id="r4_4" value="4"><label for="r4_4">★</label>
+          <input type="radio" name="r4" id="r4_3" value="3"><label for="r4_3">★</label>
+          <input type="radio" name="r4" id="r4_2" value="2"><label for="r4_2">★</label>
+          <input type="radio" name="r4" id="r4_1" value="1"><label for="r4_1">★</label>
         </div>
       </div>
     </section>
 
-    <footer class="actions">
-      <button id="enviarBtn" class="btn btn-primary">Enviar calificación</button>
-    </footer>
+    <button id="enviarBtn" class="btn">Enviar calificación</button>
   </div>
 </div>
 
@@ -108,7 +100,6 @@
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  // Config del proyecto
   const firebaseConfig = {
     apiKey: "AIzaSyAzqBW_0QduNdRk2lHFzgh8cOqHOzCRq8A",
     authDomain: "tu-opinion-importa-msi.firebaseapp.com",
@@ -120,109 +111,86 @@
   };
 
   const app = initializeApp(firebaseConfig);
-  try { getAnalytics(app); } catch (_) {}
+  try { getAnalytics(app); } catch(_) {}
   const db = getFirestore(app);
 
-  // Helpers
-  const $ = (s) => document.querySelector(s);
-  const getStar = (name) => {
-    const el = document.querySelector(`input[name="${name}"]:checked`);
+  const $ = s => document.querySelector(s);
+  const getStar = n => {
+    const el = document.querySelector(`input[name="${n}"]:checked`);
     return el ? Number(el.value) : 0;
   };
   const parseHashPrefill = () => {
-    const i = location.href.indexOf("#");
-    if (i < 0) return;
-    let frag = decodeURIComponent(location.href.slice(i + 1)).trim();
-    let parts = frag.split("|");
-    if (parts.length < 3) parts = frag.split(",");
-    const [placa="", ident="", sector=""] = parts.map(s => s.trim());
+    const i = location.href.indexOf("#"); if (i < 0) return;
+    let f = decodeURIComponent(location.href.slice(i+1)).trim();
+    let p = f.split("|"); if (p.length < 3) p = f.split(",");
+    const [placa="", ident="", sector=""] = p.map(s => s.trim());
     if (placa && !$("#placaInput").value) $("#placaInput").value = placa;
     if (ident && !$("#vehiculoInput").value) $("#vehiculoInput").value = ident;
     if (sector && !$("#sectorInput").value) $("#sectorInput").value = sector;
   };
 
-  function disableAll() {
-    document.querySelectorAll("input, button").forEach(el => el.disabled = true);
-  }
+  function disableAll(){ document.querySelectorAll("input,button").forEach(e=>e.disabled=true); }
 
-  // Overlay states
-  function showSending() {
-    const overlay = $("#overlay");
-    const box = $("#overlayBox");
+  function showSending(){
     $("#spinner").style.display = "inline-block";
     $("#overlayMsg").textContent = "Se está enviando su respuesta…";
-    box.classList.remove("success");
-    overlay.classList.add("show");
+    $("#overlayBox").classList.remove("success");
+    $("#overlay").classList.add("show");
   }
-
-  function showThanksPermanent() {
-    const box = $("#overlayBox");
+  function showThanksPermanent(){
     $("#spinner").style.display = "none";
     $("#overlayMsg").textContent = "¡Gracias por su calificación!";
-    box.classList.add("success");
-    disableAll(); // bloquea inputs y botón
+    $("#overlayBox").classList.add("success");
+    disableAll(); // permanece
   }
 
-  let sending = false;
-  async function guardar() {
-    if (sending) return;
+  let sending=false;
+  async function guardar(){
+    if(sending) return;
     const nombre   = $("#nombreInput").value.trim();
     const telefono = $("#telefonoInput").value.trim();
     const placa    = $("#placaInput").value.trim();
     const ident    = $("#vehiculoInput").value.trim();
     const sector   = $("#sectorInput").value.trim();
+    const r1 = getStar("r1"), r2 = getStar("r2"), r3 = getStar("r3"), r4 = getStar("r4");
 
-    const r1 = getStar("rating1");
-    const r2 = getStar("rating2");
-    const r3 = getStar("rating3");
-    const r4 = getStar("rating4");
+    const errs = [];
+    if(!nombre) errs.push("El nombre es obligatorio.");
+    if(!telefono) errs.push("El teléfono es obligatorio.");
+    if(!placa) errs.push("Placa / DNI es obligatorio.");
+    if(!ident) errs.push("Identificador es obligatorio.");
+    if(!sector) errs.push("Sector / Cargo es obligatorio.");
+    if(!r1 || !r2 || !r3 || !r4) errs.push("Seleccione las 4 calificaciones.");
+    if(errs.length){ alert(errs.join("\n")); return; }
 
-    const errores = [];
-    if (!nombre) errores.push("El nombre es obligatorio.");
-    if (!telefono) errores.push("El teléfono es obligatorio.");
-    if (!placa) errores.push("Placa / DNI es obligatorio.");
-    if (!ident) errores.push("Identificador es obligatorio.");
-    if (!sector) errores.push("Sector / Cargo es obligatorio.");
-    if (!r1 || !r2 || !r3 || !r4) errores.push("Seleccione las 4 calificaciones.");
+    const tz="America/Lima", now=new Date();
+    const fecha=new Intl.DateTimeFormat("es-PE",{year:"numeric",month:"2-digit",day:"2-digit",timeZone:tz}).format(now);
+    const hora =new Intl.DateTimeFormat("es-PE",{hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true,timeZone:tz}).format(now);
+    const timestamp_ms=now.getTime();
 
-    if (errores.length) { alert(errores.join("\n")); return; }
-
-    // Tiempo local Lima + timestamps
-    const tz = "America/Lima";
-    const now = new Date();
-    const fecha = new Intl.DateTimeFormat("es-PE",{year:"numeric",month:"2-digit",day:"2-digit", timeZone:tz}).format(now);
-    const hora  = new Intl.DateTimeFormat("es-PE",{hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true,timeZone:tz}).format(now);
-    const timestamp_ms = now.getTime();
-
-    const payload = {
+    const payload={
       nombre, telefono,
       placa_dni: placa,
       identificador: ident,
       sector_cargo: sector,
-      calificaciones: { presentacion: r1, limpieza: r2, rapidez: r3, solucion: r4 },
-      fecha, hora,
-      timestamp: serverTimestamp(),
-      timestamp_ms
+      calificaciones:{presentacion:r1,limpieza:r2,rapidez:r3,solucion:r4},
+      fecha, hora, timestamp: serverTimestamp(), timestamp_ms
     };
 
-    try {
-      sending = true;
-      $("#enviarBtn").disabled = true;
-      showSending();
-      await addDoc(collection(db, "encuestas"), payload);
-      showThanksPermanent();   // se queda en la pantalla de gracias
-    } catch (e) {
+    try{
+      sending=true; $("#enviarBtn").disabled=true; showSending();
+      await addDoc(collection(db,"encuestas"), payload);
+      showThanksPermanent();
+    }catch(e){
       console.error(e);
-      alert("No se pudo guardar. Revisa tu conexión e inténtalo de nuevo.");
+      alert("No se pudo guardar. Intente nuevamente.");
       $("#overlay").classList.remove("show");
-      $("#enviarBtn").disabled = false;
-      sending = false;
+      $("#enviarBtn").disabled=false; sending=false;
     }
   }
 
-  // Init
-  window.addEventListener("DOMContentLoaded", () => {
-    parseHashPrefill();           // opcional: prefija si llega #PLACA|IDENTIFICADOR|SECTOR
+  window.addEventListener("DOMContentLoaded", ()=>{
+    parseHashPrefill();
     $("#enviarBtn").addEventListener("click", guardar);
   });
   window.addEventListener("hashchange", parseHashPrefill);
