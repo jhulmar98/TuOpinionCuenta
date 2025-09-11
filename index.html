@@ -2,17 +2,19 @@
 <html lang="es">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 <title>Tu Opinión Cuenta</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="wrap">
   <div class="card">
-    <h1>Tu Opinión Cuenta</h1>
+    <header class="header">
+      <h1>Tu Opinión Cuenta</h1>
+    </header>
 
-    <!-- Datos (texto primero) -->
-    <div class="grid">
+    <!-- Datos (compacto, sin scroll) -->
+    <section class="grid grid-compact">
       <div class="kpi">
         <div class="lbl">👤 Nombre</div>
         <input id="nombreInput" class="input" type="text" placeholder="Nombre y apellidos">
@@ -33,64 +35,62 @@
         <div class="lbl">🏷️ Sector / Cargo</div>
         <input id="sectorInput" class="input" type="text" placeholder="Sector del vehículo o Cargo del sereno">
       </div>
-    </div>
+    </section>
 
-    <!-- Calificación con caritas -->
-    <div class="rate">
+    <!-- Ratings en grilla 2x2 para que todo quepa -->
+    <section class="rate">
       <h2 class="sec">Calificación del servicio</h2>
 
-      <div class="qblock">
-        <div class="qlabel">1. Presentación personal</div>
-        <div class="faces" aria-label="Calificar presentación personal">
-          <input type="radio" name="rating1" id="r1_1" value="1"><label for="r1_1" title="Muy mal">😭</label>
-          <input type="radio" name="rating1" id="r1_2" value="2"><label for="r1_2" title="Mal">😢</label>
-          <input type="radio" name="rating1" id="r1_3" value="3"><label for="r1_3" title="Regular">😐</label>
-          <input type="radio" name="rating1" id="r1_4" value="4"><label for="r1_4" title="Bien">🙂</label>
-          <input type="radio" name="rating1" id="r1_5" value="5"><label for="r1_5" title="Excelente">😄</label>
+      <div class="ratings-grid">
+        <div class="qblock">
+          <div class="qlabel">1. Presentación personal</div>
+          <div class="stars" aria-label="Presentación personal">
+            <input type="radio" name="rating1" id="r1_5" value="5"><label for="r1_5">★</label>
+            <input type="radio" name="rating1" id="r1_4" value="4"><label for="r1_4">★</label>
+            <input type="radio" name="rating1" id="r1_3" value="3"><label for="r1_3">★</label>
+            <input type="radio" name="rating1" id="r1_2" value="2"><label for="r1_2">★</label>
+            <input type="radio" name="rating1" id="r1_1" value="1"><label for="r1_1">★</label>
+          </div>
+        </div>
+
+        <div class="qblock">
+          <div class="qlabel">2. Limpieza del vehículo</div>
+          <div class="stars" aria-label="Limpieza del vehículo">
+            <input type="radio" name="rating2" id="r2_5" value="5"><label for="r2_5">★</label>
+            <input type="radio" name="rating2" id="r2_4" value="4"><label for="r2_4">★</label>
+            <input type="radio" name="rating2" id="r2_3" value="3"><label for="r2_3">★</label>
+            <input type="radio" name="rating2" id="r2_2" value="2"><label for="r2_2">★</label>
+            <input type="radio" name="rating2" id="r2_1" value="1"><label for="r2_1">★</label>
+          </div>
+        </div>
+
+        <div class="qblock">
+          <div class="qlabel">3. ¿Llegó rápido?</div>
+          <div class="stars" aria-label="Rapidez">
+            <input type="radio" name="rating3" id="r3_5" value="5"><label for="r3_5">★</label>
+            <input type="radio" name="rating3" id="r3_4" value="4"><label for="r3_4">★</label>
+            <input type="radio" name="rating3" id="r3_3" value="3"><label for="r3_3">★</label>
+            <input type="radio" name="rating3" id="r3_2" value="2"><label for="r3_2">★</label>
+            <input type="radio" name="rating3" id="r3_1" value="1"><label for="r3_1">★</label>
+          </div>
+        </div>
+
+        <div class="qblock">
+          <div class="qlabel">4. ¿Solucionó el problema?</div>
+          <div class="stars" aria-label="Solución del problema">
+            <input type="radio" name="rating4" id="r4_5" value="5"><label for="r4_5">★</label>
+            <input type="radio" name="rating4" id="r4_4" value="4"><label for="r4_4">★</label>
+            <input type="radio" name="rating4" id="r4_3" value="3"><label for="r4_3">★</label>
+            <input type="radio" name="rating4" id="r4_2" value="2"><label for="r4_2">★</label>
+            <input type="radio" name="rating4" id="r4_1" value="1"><label for="r4_1">★</label>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="qblock">
-        <div class="qlabel">2. Limpieza del vehículo</div>
-        <div class="faces" aria-label="Calificar limpieza">
-          <input type="radio" name="rating2" id="r2_1" value="1"><label for="r2_1">😭</label>
-          <input type="radio" name="rating2" id="r2_2" value="2"><label for="r2_2">😢</label>
-          <input type="radio" name="rating2" id="r2_3" value="3"><label for="r2_3">😐</label>
-          <input type="radio" name="rating2" id="r2_4" value="4"><label for="r2_4">🙂</label>
-          <input type="radio" name="rating2" id="r2_5" value="5"><label for="r2_5">😄</label>
-        </div>
-      </div>
-
-      <div class="qblock">
-        <div class="qlabel">3. ¿Llegó rápido?</div>
-        <div class="faces" aria-label="Calificar rapidez">
-          <input type="radio" name="rating3" id="r3_1" value="1"><label for="r3_1">😭</label>
-          <input type="radio" name="rating3" id="r3_2" value="2"><label for="r3_2">😢</label>
-          <input type="radio" name="rating3" id="r3_3" value="3"><label for="r3_3">😐</label>
-          <input type="radio" name="rating3" id="r3_4" value="4"><label for="r3_4">🙂</label>
-          <input type="radio" name="rating3" id="r3_5" value="5"><label for="r3_5">😄</label>
-        </div>
-      </div>
-
-      <div class="qblock">
-        <div class="qlabel">4. ¿Solucionó el problema?</div>
-        <div class="faces" aria-label="Calificar solución">
-          <input type="radio" name="rating4" id="r4_1" value="1"><label for="r4_1">😭</label>
-          <input type="radio" name="rating4" id="r4_2" value="2"><label for="r4_2">😢</label>
-          <input type="radio" name="rating4" id="r4_3" value="3"><label for="r4_3">😐</label>
-          <input type="radio" name="rating4" id="r4_4" value="4"><label for="r4_4">🙂</label>
-          <input type="radio" name="rating4" id="r4_5" value="5"><label for="r4_5">😄</label>
-        </div>
-      </div>
-    </div>
-
-    <div class="row" style="margin-top:14px">
+    <footer class="actions">
       <button id="enviarBtn" class="btn btn-primary">Enviar calificación</button>
-    </div>
-
-    <div class="hint">
-      (Opcional) Si abres con <code>#PLACA|IDENTIFICADOR|SECTOR</code>, se llenan los campos; pero puedes escribirlos manualmente.
-    </div>
+    </footer>
   </div>
 </div>
 
@@ -125,7 +125,7 @@
 
   // Helpers
   const $ = (s) => document.querySelector(s);
-  const getFaceValue = (name) => {
+  const getStar = (name) => {
     const el = document.querySelector(`input[name="${name}"]:checked`);
     return el ? Number(el.value) : 0;
   };
@@ -160,8 +160,7 @@
     $("#spinner").style.display = "none";
     $("#overlayMsg").textContent = "¡Gracias por su calificación!";
     box.classList.add("success");
-    // No se oculta: se queda en esta pantalla.
-    disableAll(); // bloquea inputs/botón para evitar duplicidad
+    disableAll(); // bloquea inputs y botón
   }
 
   let sending = false;
@@ -173,19 +172,18 @@
     const ident    = $("#vehiculoInput").value.trim();
     const sector   = $("#sectorInput").value.trim();
 
-    const r1 = getFaceValue("rating1");
-    const r2 = getFaceValue("rating2");
-    const r3 = getFaceValue("rating3");
-    const r4 = getFaceValue("rating4");
+    const r1 = getStar("rating1");
+    const r2 = getStar("rating2");
+    const r3 = getStar("rating3");
+    const r4 = getStar("rating4");
 
-    // Validaciones mínimas (teléfono solo requerido, sin formato)
     const errores = [];
     if (!nombre) errores.push("El nombre es obligatorio.");
     if (!telefono) errores.push("El teléfono es obligatorio.");
     if (!placa) errores.push("Placa / DNI es obligatorio.");
     if (!ident) errores.push("Identificador es obligatorio.");
     if (!sector) errores.push("Sector / Cargo es obligatorio.");
-    if (!r1 || !r2 || !r3 || !r4) errores.push("Responda todas las preguntas.");
+    if (!r1 || !r2 || !r3 || !r4) errores.push("Seleccione las 4 calificaciones.");
 
     if (errores.length) { alert(errores.join("\n")); return; }
 
@@ -212,7 +210,7 @@
       $("#enviarBtn").disabled = true;
       showSending();
       await addDoc(collection(db, "encuestas"), payload);
-      showThanksPermanent();
+      showThanksPermanent();   // se queda en la pantalla de gracias
     } catch (e) {
       console.error(e);
       alert("No se pudo guardar. Revisa tu conexión e inténtalo de nuevo.");
@@ -224,7 +222,7 @@
 
   // Init
   window.addEventListener("DOMContentLoaded", () => {
-    parseHashPrefill();
+    parseHashPrefill();           // opcional: prefija si llega #PLACA|IDENTIFICADOR|SECTOR
     $("#enviarBtn").addEventListener("click", guardar);
   });
   window.addEventListener("hashchange", parseHashPrefill);
