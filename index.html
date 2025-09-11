@@ -11,8 +11,16 @@
   <div class="card">
     <h1>Tu Opinión Cuenta</h1>
 
-    <!-- Campos universales (texto primero) -->
+    <!-- Datos (texto primero) -->
     <div class="grid">
+      <div class="kpi">
+        <div class="lbl">👤 Nombre</div>
+        <input id="nombreInput" class="input" type="text" placeholder="Nombre y apellidos">
+      </div>
+      <div class="kpi">
+        <div class="lbl">📞 Teléfono</div>
+        <input id="telefonoInput" class="input" type="tel" placeholder="Ingresa tu número">
+      </div>
       <div class="kpi">
         <div class="lbl">🔖 Placa / DNI</div>
         <input id="placaInput" class="input" type="text" placeholder="Placa del vehículo o DNI del sereno">
@@ -86,7 +94,7 @@
   </div>
 </div>
 
-<!-- Overlay: envío / gracias -->
+<!-- Overlay: envío / gracias (permanece en gracias) -->
 <div id="overlay" class="overlay">
   <div id="overlayBox" class="overlay-box">
     <div id="spinner" class="spinner" aria-hidden="true"></div>
@@ -100,7 +108,7 @@
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  // Config de tu proyecto
+  // Config del proyecto
   const firebaseConfig = {
     apiKey: "AIzaSyAzqBW_0QduNdRk2lHFzgh8cOqHOzCRq8A",
     authDomain: "tu-opinion-importa-msi.firebaseapp.com",
@@ -133,6 +141,10 @@
     if (sector && !$("#sectorInput").value) $("#sectorInput").value = sector;
   };
 
+  function disableAll() {
+    document.querySelectorAll("input, button").forEach(el => el.disabled = true);
+  }
+
   // Overlay states
   function showSending() {
     const overlay = $("#overlay");
@@ -143,33 +155,38 @@
     overlay.classList.add("show");
   }
 
-  function showThanks5s() {
-    const overlay = $("#overlay");
+  function showThanksPermanent() {
     const box = $("#overlayBox");
-    // Cambiar a estado éxito (rojo con letras blancas, sin spinner)
     $("#spinner").style.display = "none";
     $("#overlayMsg").textContent = "¡Gracias por su calificación!";
     box.classList.add("success");
-    // Mantener 5s y luego ocultar
-    setTimeout(() => overlay.classList.remove("show"), 5000);
+    // No se oculta: se queda en esta pantalla.
+    disableAll(); // bloquea inputs/botón para evitar duplicidad
   }
 
   let sending = false;
   async function guardar() {
-    if (sending) return; // antirebote
-    const placa  = $("#placaInput").value.trim();
-    const ident  = $("#vehiculoInput").value.trim();
-    const sector = $("#sectorInput").value.trim();
+    if (sending) return;
+    const nombre   = $("#nombreInput").value.trim();
+    const telefono = $("#telefonoInput").value.trim();
+    const placa    = $("#placaInput").value.trim();
+    const ident    = $("#vehiculoInput").value.trim();
+    const sector   = $("#sectorInput").value.trim();
+
     const r1 = getFaceValue("rating1");
     const r2 = getFaceValue("rating2");
     const r3 = getFaceValue("rating3");
     const r4 = getFaceValue("rating4");
 
+    // Validaciones mínimas (teléfono solo requerido, sin formato)
     const errores = [];
+    if (!nombre) errores.push("El nombre es obligatorio.");
+    if (!telefono) errores.push("El teléfono es obligatorio.");
     if (!placa) errores.push("Placa / DNI es obligatorio.");
     if (!ident) errores.push("Identificador es obligatorio.");
     if (!sector) errores.push("Sector / Cargo es obligatorio.");
     if (!r1 || !r2 || !r3 || !r4) errores.push("Responda todas las preguntas.");
+
     if (errores.length) { alert(errores.join("\n")); return; }
 
     // Tiempo local Lima + timestamps
@@ -180,6 +197,7 @@
     const timestamp_ms = now.getTime();
 
     const payload = {
+      nombre, telefono,
       placa_dni: placa,
       identificador: ident,
       sector_cargo: sector,
@@ -194,15 +212,13 @@
       $("#enviarBtn").disabled = true;
       showSending();
       await addDoc(collection(db, "encuestas"), payload);
-      showThanks5s();
+      showThanksPermanent();
     } catch (e) {
       console.error(e);
       alert("No se pudo guardar. Revisa tu conexión e inténtalo de nuevo.");
       $("#overlay").classList.remove("show");
       $("#enviarBtn").disabled = false;
-    } finally {
-      // Rehabilitar el botón después de los 5s del overlay de gracias
-      setTimeout(() => { sending = false; $("#enviarBtn").disabled = false; }, 5000);
+      sending = false;
     }
   }
 
