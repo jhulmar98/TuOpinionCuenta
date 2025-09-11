@@ -1,155 +1,111 @@
-/* Sin scroll: todo en una sola pantalla */
+/* ——— Layout sin scroll ——— */
 html, body {
   height: 100%;
-  overflow: hidden; /* bloqueo scroll */
-  background: #f7f9fc;
+  margin: 0;
+  background: #f4f7fb;
   color: #0b1220;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  overflow: hidden; /* ¡sin scroll! */
 }
-
-/* Layout centrado y compacto */
-.wrap {
-  height: 100%;
+.shell {
+  height: 100dvh; /* viewport real en móviles */
   display: grid;
   place-items: center;
-  padding: 8px;
+  padding: 6px;
 }
 .card {
-  width: min(1100px, 98vw);
-  height: min(680px, 96vh); /* cabe en la altura */
+  width: min(920px, 98vw);
+  height: min(600px, 96dvh);        /* ajusta a la altura de pantalla */
   background: #fff;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #e6e9f0;
   border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(2,6,23,.06);
+  box-shadow: 0 10px 36px rgba(16,24,40,.08);
   padding: 12px 14px;
   display: grid;
-  grid-template-rows: auto auto 1fr auto;
+  grid-template-rows: auto auto 1fr auto; /* título, fields, ratings, botón */
   gap: 8px;
+  overflow: hidden;
 }
-.header h1 { font-size: 1.2rem; margin: 0; }
+.title { margin: 2px 0 4px; font-size: 1.25rem; }
 
-/* Grid de datos compacta */
-.grid-compact {
+/* ——— Campos ultra-compactos ——— */
+.fields {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 8px;
 }
-.kpi { background:#fafbff; border:1px solid #e5e7eb; border-radius:10px; padding:10px; }
-.lbl { color:#4b5563; font-size:.78rem; margin-bottom:6px; }
+.field { background:#fafcff; border:1px solid #eef1f5; border-radius:10px; padding:8px; }
+.lbl { color:#5b6476; font-size:.78rem; margin-bottom:4px; display:block; }
 .input {
-  width: 100%;
-  padding: 8px 10px;
-  font-size: .95rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  background: #fff;
+  width: 100%; padding: 7px 10px; font-size: .95rem;
+  border: 1px solid #e6e9f0; border-radius: 8px; background: #fff;
 }
 
-/* Título seccion */
-.sec { font-size:1rem; margin: 0 0 6px; }
-
-/* Ratings en dos columnas para ahorrar espacio */
-.ratings-grid {
+/* ——— Ratings (2×2) ——— */
+.ratings {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 6px 12px;
+  gap: 8px 12px;
+  align-content: start;
 }
-.qblock { margin: 0; }
-.qlabel { margin-bottom: 4px; font-size: .92rem; }
+.q { padding: 6px 8px; border:1px solid #eef1f5; border-radius:10px; background:#fafcff; }
+.qlabel { font-size:.92rem; margin-bottom:4px; }
 
-/* Estrellitas compactas (sin duplicados) */
-.stars {
-  display: inline-flex;
-  gap: 6px;
-  direction: rtl;   /* resalta hacia la izquierda */
-  user-select: none;
-}
-.stars input { display: none; }
+/* Estrellitas compactas */
+.stars { display:inline-flex; gap:6px; direction: rtl; user-select:none; }
+.stars input { display:none; }
 .stars label {
-  font-size: 24px;
-  line-height: 1;
-  cursor: pointer;
-  color: #d1d5db;             /* gris claro */
-  transition: transform .1s, color .1s, text-shadow .1s;
+  font-size:22px; line-height:1; cursor:pointer;
+  color:#d1d5db; transition:transform .1s, color .1s, text-shadow .1s;
 }
 .stars label:hover,
-.stars label:hover ~ label {
-  color: #f5b301;             /* dorado */
-  text-shadow: 0 0 0.5px #f5b301;
-  transform: translateY(-1px) scale(1.05);
-}
-.stars input:checked ~ label {
-  color: #f5b301;
-  text-shadow: 0 0 0.5px #f5b301;
-}
+.stars label:hover ~ label { color:#f5b301; text-shadow:0 0 .5px #f5b301; transform:translateY(-1px) scale(1.05); }
+.stars input:checked ~ label { color:#f5b301; text-shadow:0 0 .5px #f5b301; }
 
-/* Botón */
-.actions { display: grid; place-items: center; }
+/* ——— Botón ——— */
 .btn {
-  appearance: none;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 10px 16px;
-  font-weight: 700;
-  cursor: pointer;
-  background: #0057d9;
-  color: #fff;
+  place-self: center;
+  appearance:none; border:1px solid #0e5cd6; background:#0e5cd6;
+  color:#fff; font-weight:800; letter-spacing:.2px;
+  border-radius:12px; padding:10px 18px; cursor:pointer;
+  box-shadow:0 6px 18px rgba(14,92,214,.25);
 }
 .btn:disabled { opacity:.6; cursor:not-allowed; }
 
-/* Overlay blanco de envío / éxito (permanece en éxito) */
+/* ——— Overlay envío/gracias ——— */
 .overlay {
-  position: fixed; inset: 0;
-  background: #ffffff; /* fondo blanco toda la pantalla */
-  display: none;
-  align-items: center; justify-content: center;
-  z-index: 1000;
+  position: fixed; inset: 0; background: #ffffff;
+  display: none; align-items: center; justify-content: center; z-index: 1000;
 }
 .overlay.show { display: flex; }
-
-/* Caja grande (centrada) */
 .overlay-box {
-  width: min(720px, 92vw);
-  min-height: 220px;
-  border-radius: 18px;
-  border: 1px solid #e5e7eb;
-  background: #fff;
-  box-shadow: 0 14px 42px rgba(0,0,0,.18);
-  padding: 28px 30px;
-  display: flex; align-items: center; justify-content: center; gap: 16px;
+  width: min(720px, 92vw); min-height: 220px;
+  border-radius: 18px; border: 1px solid #e6e9f0;
+  background: #fff; box-shadow: 0 14px 42px rgba(0,0,0,.18);
+  padding: 28px 30px; display: flex; align-items: center; justify-content: center; gap: 16px;
 }
-.overlay-box.success {
-  background: #d32f2f;        /* rojo */
-  color: #ffffff;              /* letras blancas */
-  border-color: transparent;
-}
-
-/* Mensaje del overlay */
-.overlay-msg {
-  font-size: 1.4rem;
-  font-weight: 800;
-  letter-spacing: .2px;
-  text-align: center;
-}
+.overlay-box.success { background: #d32f2f; color: #fff; border-color: transparent; }
+.overlay-msg { font-size: 1.35rem; font-weight: 800; text-align: center; }
 
 /* Spinner */
 .spinner {
-  width: 32px; height: 32px; border-radius: 50%;
-  border: 3px solid #e5e7eb; border-top-color: #0057d9;
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 3px solid #e5e7eb; border-top-color: #0e5cd6;
   animation: spin 1s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* Ajustes responsivos para mantener 1 pantalla */
-@media (max-width: 980px) {
-  .grid-compact { grid-template-columns: repeat(3, 1fr); }
+/* ——— Ajustes responsivos para caber siempre ——— */
+@media (max-width: 960px) {
+  .fields { grid-template-columns: repeat(3, 1fr); }
 }
-@media (max-width: 640px) {
-  .card { height: min(720px, 96vh); }
-  .grid-compact { grid-template-columns: repeat(2, 1fr); }
-  .stars label { font-size: 22px; }
+@media (max-width: 640px), (max-height: 680px) {
+  .card { height: min(560px, 96dvh); }
+  .fields { grid-template-columns: repeat(2, 1fr); }
+  .stars label { font-size:20px; }
 }
-@media (max-width: 420px) {
-  .grid-compact { grid-template-columns: 1fr; }
-  .stars label { font-size: 20px; }
+@media (max-width: 420px), (max-height: 600px) {
+  .fields { grid-template-columns: 1fr; }
+  .stars label { font-size:18px; }
+  .overlay-box { min-height: 200px; }
 }
