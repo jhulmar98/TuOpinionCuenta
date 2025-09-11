@@ -1,101 +1,73 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background: #f5f6fa;
-  color: #333;
+/* Tema claro */
+:root{
+  --bg:#f7f9fc; --card:#ffffff; --text:#0b1220; --muted:#4b5563;
+  --accent:#0057d9; --border:#e5e7eb;
 }
 
-.wrap {
-  display: flex;
-  justify-content: center;
-  padding: 10px;
+html,body{
+  margin:0; padding:0; background:var(--bg); color:var(--text);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+}
+.wrap{max-width:960px;margin:24px auto;padding:16px}
+.card{
+  background:var(--card); border:1px solid var(--border); border-radius:16px;
+  box-shadow:0 8px 30px rgba(2,6,23,.06); padding:20px;
+}
+h1{font-size:1.4rem;margin:0 0 8px}
+.sec{font-size:1.08rem;margin:18px 0 8px}
+.sub{color:var(--muted);font-size:.95rem;margin-bottom:16px}
+
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.kpi{background:#fafbff;border:1px solid var(--border);border-radius:12px;padding:12px}
+.lbl{color:var(--muted);font-size:.82rem;margin-bottom:6px}
+.val{font-weight:700;font-size:1.06rem;word-break:break-word}
+.input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:#fff}
+
+.rate{margin-top:18px}
+.qblock{margin:14px 0 10px}
+.qlabel{margin-bottom:8px}
+
+/* Caritas */
+.faces{display:inline-flex;gap:10px;user-select:none}
+.faces input{display:none}
+.faces label{
+  font-size:30px; line-height:1;
+  padding:6px 8px; border-radius:12px;
+  cursor:pointer; transition:transform .12s, filter .12s, background .12s, box-shadow .12s;
+  filter:grayscale(45%) opacity(.8);
+}
+.faces label:hover{transform:translateY(-2px) scale(1.08); filter:none}
+.faces input:checked + label{
+  filter:none; transform:scale(1.15);
+  background:rgba(0,87,217,.06);
+  box-shadow:0 0 0 2px var(--accent) inset;
 }
 
-.card {
-  background: white;
-  border-radius: 16px;
-  padding: 20px;
-  max-width: 480px;
-  width: 100%;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
+/* Botones */
+.row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+.btn{appearance:none;border:1px solid var(--border);border-radius:12px;padding:10px 14px;
+  font-weight:700;cursor:pointer;background:#fff}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn:disabled{opacity:.6;cursor:not-allowed}
 
-h1 {
-  text-align: center;
-  font-size: 1.5em;
-  margin-bottom: 20px;
-  color: #2c3e50;
+/* Gracias / bloqueo */
+.thanks{
+  position:fixed; inset:0; display:grid; place-items:center;
+  background:rgba(0,0,0,.35); z-index:60;
 }
+.thanks-card{
+  width:min(520px,92vw); background:#fff; color:#0b1220;
+  border-radius:16px; border:1px solid var(--border);
+  padding:24px; text-align:center; box-shadow:0 10px 34px rgba(0,0,0,.2);
+}
+.thanks-card h2{margin:0 0 8px; font-size:1.4rem}
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  margin-bottom: 20px;
-}
+/* Mensaje pequeño (si lo usas) */
+.hint{color:var(--muted);font-size:.88rem;margin-top:12px}
 
-.kpi {
-  background: #ecf0f1;
-  border-radius: 12px;
-  padding: 12px;
-  text-align: center;
-}
+/* Toast opcional */
+.toast{position:fixed;right:16px;bottom:16px;background:#0c1a2f;color:#dfe9ff;border:1px solid rgba(255,255,255,.18);
+  padding:10px 12px;border-radius:10px;opacity:0;transform:translateY(8px);transition:.25s;z-index:60}
+.toast.show{opacity:1;transform:translateY(0)}
 
-.lbl {
-  font-size: 0.9em;
-  color: #7f8c8d;
-}
-
-.val {
-  font-weight: bold;
-  font-size: 1.2em;
-  margin-top: 5px;
-}
-
-.sec {
-  margin-top: 15px;
-  margin-bottom: 10px;
-  text-align: center;
-  font-size: 1.2em;
-  color: #34495e;
-}
-
-.qblock {
-  margin-bottom: 15px;
-}
-
-.qlabel {
-  font-size: 0.95em;
-  margin-bottom: 5px;
-}
-
-.stars {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: flex-end;
-}
-
-.stars input {
-  display: none;
-}
-
-.stars label {
-  font-size: 28px;
-  cursor: pointer;
-  color: #ccc;
-  padding: 0 3px;
-  transition: color 0.2s;
-}
-
-.stars input:checked ~ label,
-.stars label:hover,
-.stars label:hover ~ label {
-  color: #f39c12;
-}
-
-.hint {
-  text-align: center;
-  font-size: 0.8em;
-  margin-top: 15px;
-  color: #7f8c8d;
-}
+@media (max-width:900px){ .grid{grid-template-columns:1fr} }
