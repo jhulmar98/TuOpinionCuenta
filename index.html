@@ -115,7 +115,7 @@
   addEventListener('DOMContentLoaded', render);
 </script>
 
-<!-- Firebase + Firestore (modular) -->
+<!-- Firebase + Firestore -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
@@ -134,7 +134,7 @@
 
   // Inicializar Firebase
   const app = initializeApp(firebaseConfig);
-  try { getAnalytics(app); } catch (_) {} // Analytics puede fallar en HTTP local, no es crítico.
+  try { getAnalytics(app); } catch (_) {}
   const db = getFirestore(app);
 
   // Click para guardar
@@ -150,7 +150,7 @@
 
     // Validaciones básicas
     if (vehiculo === "—" || placa === "—" || sector === "—") {
-      alert("Completa Vehículo, Placa y Sector (pasa los datos en la URL).");
+      alert("Completa Vehículo, Placa y Sector (pasa los datos en la URL o escanea).");
       return;
     }
     if (!presentacion || !limpieza || !rapidez || !solucion) {
@@ -158,23 +158,38 @@
       return;
     }
 
+    // Fecha/hora local de Lima y timestamps
+    const tz = "America/Lima";
+    const now = new Date();
+    const fecha = new Intl.DateTimeFormat("es-PE", {year:"numeric", month:"2-digit", day:"2-digit", timeZone: tz}).format(now);
+    const hora  = new Intl.DateTimeFormat("es-PE", {hour:"2-digit", minute:"2-digit", second:"2-digit", hour12:true, timeZone: tz}).format(now);
+    const timestamp_ms = now.getTime(); // número epoch en ms
+
     const payload = {
       vehiculo, placa, sector,
       calificaciones: { presentacion, limpieza, rapidez, solucion },
-      userAgent: navigator.userAgent,
-      createdAt: serverTimestamp()
+      fecha,                 // p.ej. 11/09/2025
+      hora,                  // p.ej. 12:56:02 p. m.
+      timestamp: serverTimestamp(), // sello del servidor (Firestore)
+      
     };
 
     try {
       await addDoc(collection(db, "encuestas"), payload);
-      alert("¡Gracias! Tu calificación fue registrada.");
+      alert("¡Muchas gracias! Tu calificación fue registrada.");
       // Limpia selecciones (opcional)
-      document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
+      document.querySelectorAll('input[type=\"radio\"]').forEach(el => el.checked = false);
     } catch (e) {
       console.error(e);
       alert("No se pudo guardar. Revisa tu conexión e inténtalo de nuevo.");
     }
   });
+
+  // Re-usa la función del script no-module
+  function getRating(name){
+    const el = document.querySelector(`input[name="${name}"]:checked`);
+    return el ? Number(el.value) : 0;
+  }
 </script>
 </body>
 </html>
