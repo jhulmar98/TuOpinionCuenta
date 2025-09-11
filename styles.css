@@ -36,7 +36,7 @@ html, body {
   font-size: clamp(20px, 5.5vw, 26px);
   font-weight: 800;
   letter-spacing: .2px;
-  color: rgb(102, 99, 99);
+  color: rgb(20, 20, 20);
 }
 
 /* Contenido vertical compacto */
@@ -113,7 +113,7 @@ html, body {
 }
 .overlay.show{ display:flex; }
 .overlay-box{
-  width:min(350px,92vw); min-height:20px;
+  width:min(350px,92vw); min-height:220px;
   border-radius:18px; border:1px solid var(--border);
   background:#fff; box-shadow:0 14px 42px rgba(0,0,0,.14);
   padding:28px 30px; display:flex; align-items:center; justify-content:center; gap:16px;
