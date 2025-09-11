@@ -1,20 +1,108 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulario</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ficha de Atención</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h2>Ingresa tus datos</h2>
-  <form>
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" name="nombre" required><br><br>
+<div class="wrap">
+  <div class="card">
+    <h1>Ficha de Atención</h1>
 
-    <label for="edad">Edad:</label>
-    <input type="number" id="edad" name="edad" required><br><br>
+    <!-- Datos del carro -->
+    <div class="grid">
+      <div class="kpi">
+        <div class="lbl">Vehículo</div>
+        <div id="vehiculo" class="val">—</div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">Placa</div>
+        <div id="placa" class="val">—</div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">Sector</div>
+        <div id="sector" class="val">—</div>
+      </div>
+    </div>
 
-    <button type="submit">Enviar</button>
-  </form>
+    <!-- Preguntas con estrellas -->
+    <div class="rate">
+      <h2 class="sec">Calificación del servicio</h2>
+
+      <div class="qblock">
+        <div class="qlabel">1. Presentación personal</div>
+        <div class="stars" aria-label="Calificar presentación personal">
+          <input type="radio" name="rating1" id="r1_5" value="5"><label for="r1_5">★</label>
+          <input type="radio" name="rating1" id="r1_4" value="4"><label for="r1_4">★</label>
+          <input type="radio" name="rating1" id="r1_3" value="3"><label for="r1_3">★</label>
+          <input type="radio" name="rating1" id="r1_2" value="2"><label for="r1_2">★</label>
+          <input type="radio" name="rating1" id="r1_1" value="1"><label for="r1_1">★</label>
+        </div>
+      </div>
+
+      <div class="qblock">
+        <div class="qlabel">2. Limpieza del vehículo</div>
+        <div class="stars" aria-label="Calificar limpieza del vehículo">
+          <input type="radio" name="rating2" id="r2_5" value="5"><label for="r2_5">★</label>
+          <input type="radio" name="rating2" id="r2_4" value="4"><label for="r2_4">★</label>
+          <input type="radio" name="rating2" id="r2_3" value="3"><label for="r2_3">★</label>
+          <input type="radio" name="rating2" id="r2_2" value="2"><label for="r2_2">★</label>
+          <input type="radio" name="rating2" id="r2_1" value="1"><label for="r2_1">★</label>
+        </div>
+      </div>
+
+      <div class="qblock">
+        <div class="qlabel">3. ¿Llegó rápido?</div>
+        <div class="stars" aria-label="Calificar tiempo de llegada">
+          <input type="radio" name="rating3" id="r3_5" value="5"><label for="r3_5">★</label>
+          <input type="radio" name="rating3" id="r3_4" value="4"><label for="r3_4">★</label>
+          <input type="radio" name="rating3" id="r3_3" value="3"><label for="r3_3">★</label>
+          <input type="radio" name="rating3" id="r3_2" value="2"><label for="r3_2">★</label>
+          <input type="radio" name="rating3" id="r3_1" value="1"><label for="r3_1">★</label>
+        </div>
+      </div>
+
+      <div class="qblock">
+        <div class="qlabel">4. ¿Solucionó la situación o problema?</div>
+        <div class="stars" aria-label="Calificar solución del problema">
+          <input type="radio" name="rating4" id="r4_5" value="5"><label for="r4_5">★</label>
+          <input type="radio" name="rating4" id="r4_4" value="4"><label for="r4_4">★</label>
+          <input type="radio" name="rating4" id="r4_3" value="3"><label for="r4_3">★</label>
+          <input type="radio" name="rating4" id="r4_2" value="2"><label for="r4_2">★</label>
+          <input type="radio" name="rating4" id="r4_1" value="1"><label for="r4_1">★</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="hint">
+      <strong>Cómo pasar los datos:</strong>
+      añade al final de la URL <code>#Camioneta 40 49|EUE 519|SECTOR 1</code> (también acepta comas).
+    </div>
+  </div>
+</div>
+
+<script>
+  // Lee "Vehículo, Placa, Sector" desde el fragmento de la URL (#…)
+  function parseHash() {
+    const frag = decodeURIComponent(location.hash.startsWith('#') ? location.hash.slice(1) : location.hash).trim();
+    if (!frag) return { vehiculo:"—", placa:"—", sector:"—" };
+    let parts = frag.split('|');
+    if (parts.length < 3) parts = frag.split(',');
+    const [vehiculo="", placa="", sector=""] = parts.map(s => s.trim());
+    return { vehiculo: vehiculo || "—", placa: placa || "—", sector: sector || "—" };
+  }
+
+  function render() {
+    const { vehiculo, placa, sector } = parseHash();
+    document.getElementById('vehiculo').textContent = vehiculo;
+    document.getElementById('placa').textContent   = placa;
+    document.getElementById('sector').textContent  = sector;
+  }
+
+  addEventListener('hashchange', render);
+  addEventListener('DOMContentLoaded', render);
+</script>
 </body>
 </html>
