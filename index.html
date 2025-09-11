@@ -11,23 +11,19 @@
   <div class="card">
     <h1 class="title">Tu Opinión Cuenta</h1>
 
-    <!-- Datos (ultra-compacto) -->
+    <!-- Datos (compacto, sin scroll) -->
     <section class="fields">
       <div class="field">
         <label class="lbl">👤 Nombre</label>
         <input id="nombreInput" class="input" type="text" placeholder="Nombre y apellidos">
       </div>
       <div class="field">
-        <label class="lbl">📞 Teléfono</label>
-        <input id="telefonoInput" class="input" type="tel" placeholder="Ingresa tu número">
-      </div>
-      <div class="field">
         <label class="lbl">🔖 Placa / DNI</label>
-        <input id="placaInput" class="input" type="text" placeholder="Placa o DNI">
+        <input id="placaInput" class="input" type="text" placeholder="Placa del vehículo o DNI">
       </div>
       <div class="field">
         <label class="lbl">🪪 Identificador</label>
-        <input id="vehiculoInput" class="input" type="text" placeholder="Nombre del sereno o Tipo de vehículo">
+        <input id="identInput" class="input" type="text" placeholder="Nombre del sereno o Tipo de vehículo">
       </div>
       <div class="field">
         <label class="lbl">🏷️ Sector / Cargo</label>
@@ -35,8 +31,8 @@
       </div>
     </section>
 
-    <!-- Calificación (2×2) -->
-    <section class="ratings">
+    <!-- Calificación (UNA sola columna) -->
+    <section class="ratings-vertical">
       <div class="q">
         <div class="qlabel">1. Presentación personal</div>
         <div class="stars" aria-label="Presentación">
@@ -118,14 +114,14 @@
   const getStar = n => {
     const el = document.querySelector(`input[name="${n}"]:checked`);
     return el ? Number(el.value) : 0;
-  };
+    };
   const parseHashPrefill = () => {
     const i = location.href.indexOf("#"); if (i < 0) return;
     let f = decodeURIComponent(location.href.slice(i+1)).trim();
     let p = f.split("|"); if (p.length < 3) p = f.split(",");
     const [placa="", ident="", sector=""] = p.map(s => s.trim());
     if (placa && !$("#placaInput").value) $("#placaInput").value = placa;
-    if (ident && !$("#vehiculoInput").value) $("#vehiculoInput").value = ident;
+    if (ident && !$("#identInput").value) $("#identInput").value = ident;
     if (sector && !$("#sectorInput").value) $("#sectorInput").value = sector;
   };
 
@@ -147,18 +143,17 @@
   let sending=false;
   async function guardar(){
     if(sending) return;
-    const nombre   = $("#nombreInput").value.trim();
-    const telefono = $("#telefonoInput").value.trim();
-    const placa    = $("#placaInput").value.trim();
-    const ident    = $("#vehiculoInput").value.trim();
-    const sector   = $("#sectorInput").value.trim();
+
+    const nombre = $("#nombreInput").value.trim();
+    const placa  = $("#placaInput").value.trim();
+    const ident  = $("#identInput").value.trim();
+    const sector = $("#sectorInput").value.trim();
     const r1 = getStar("r1"), r2 = getStar("r2"), r3 = getStar("r3"), r4 = getStar("r4");
 
     const errs = [];
     if(!nombre) errs.push("El nombre es obligatorio.");
-    if(!telefono) errs.push("El teléfono es obligatorio.");
-    if(!placa) errs.push("Placa / DNI es obligatorio.");
-    if(!ident) errs.push("Identificador es obligatorio.");
+    if(!placa)  errs.push("Placa / DNI es obligatorio.");
+    if(!ident)  errs.push("Identificador es obligatorio.");
     if(!sector) errs.push("Sector / Cargo es obligatorio.");
     if(!r1 || !r2 || !r3 || !r4) errs.push("Seleccione las 4 calificaciones.");
     if(errs.length){ alert(errs.join("\n")); return; }
@@ -169,18 +164,19 @@
     const timestamp_ms=now.getTime();
 
     const payload={
-      nombre, telefono,
+      nombre_usuario: nombre,
       placa_dni: placa,
       identificador: ident,
       sector_cargo: sector,
-      calificaciones:{presentacion:r1,limpieza:r2,rapidez:r3,solucion:r4},
-      fecha, hora, timestamp: serverTimestamp(), timestamp_ms
+      calificaciones:{ presentacion:r1, limpieza:r2, rapidez:r3, solucion:r4 },
+      fecha, hora,
+      timestamp: serverTimestamp(), timestamp_ms
     };
 
     try{
       sending=true; $("#enviarBtn").disabled=true; showSending();
       await addDoc(collection(db,"encuestas"), payload);
-      showThanksPermanent();
+      showThanksPermanent(); // se queda en pantalla
     }catch(e){
       console.error(e);
       alert("No se pudo guardar. Intente nuevamente.");
