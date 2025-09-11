@@ -2,6 +2,7 @@
 :root{
   --bg:#f7f9fc; --card:#ffffff; --text:#0b1220; --muted:#4b5563;
   --accent:#0057d9; --border:#e5e7eb;
+  --success-bg:#d32f2f; --success-text:#ffffff;
 }
 
 html,body{
@@ -39,8 +40,8 @@ h1{font-size:1.4rem;margin:0 0 8px}
 .faces label:hover{transform:translateY(-2px) scale(1.08); filter:none}
 .faces input:checked + label{
   filter:none; transform:scale(1.15);
-  background:rgba(211,47,47,.08); /* leve para marcar selección */
-  box-shadow:0 0 0 2px rgba(211,47,47,.45) inset;
+  background:rgba(0,0,0,.06);
+  box-shadow:0 0 0 2px var(--accent) inset;
 }
 
 /* Botones */
@@ -50,16 +51,43 @@ h1{font-size:1.4rem;margin:0 0 8px}
 .btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
 .btn:disabled{opacity:.6;cursor:not-allowed}
 
-/* Mensaje 5s: fondo blanco + caja roja con letras blancas */
-.ack{
-  position:fixed; inset:0; background:#ffffff; display:none;
-  align-items:center; justify-content:center; z-index:100;
+/* Overlay de envío/éxito */
+.overlay{
+  position:fixed; inset:0; background:#ffffff; /* fondo blanco toda la pantalla */
+  display:none; align-items:center; justify-content:center; z-index:100;
 }
-.ack.show{display:flex}
-.ack-box{
-  background:#d32f2f; color:#ffffff; font-weight:800; font-size:1.2rem;
-  padding:22px 26px; border-radius:14px; box-shadow:0 10px 30px rgba(0,0,0,.2);
+.overlay.show{display:flex}
+
+/* Caja grande */
+.overlay-box{
+  width:min(680px, 92vw);      /* grandecito */
+  min-height:180px;
+  border-radius:18px;
+  border:1px solid var(--border);
+  background:#fff;
+  box-shadow:0 14px 42px rgba(0,0,0,.18);
+  padding:28px 30px;
+  display:flex; align-items:center; justify-content:center; gap:16px;
 }
+.overlay-box.success{
+  background:var(--success-bg);
+  color:var(--success-text);
+  border-color:transparent;
+}
+
+/* Mensaje */
+.overlay-msg{
+  font-size:1.25rem; font-weight:800; letter-spacing:.2px;
+  text-align:center;
+}
+
+/* Spinner para "Enviando..." */
+.spinner{
+  width:28px; height:28px; border-radius:50%;
+  border:3px solid #e5e7eb; border-top-color:var(--accent);
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{ to { transform: rotate(360deg); } }
 
 /* Texto auxiliar */
 .hint{color:var(--muted);font-size:.88rem;margin-top:12px}
