@@ -8,85 +8,81 @@
 </head>
 <body>
 <div class="screen">
-  <div class="panel">
-    <header class="head">
-      <h1>Tu Opinión Cuenta</h1>
-    </header>
+  <header class="header">
+    <h1>Tu Opinión Cuenta</h1>
+  </header>
 
-    <!-- Campos (2 columnas para ahorrar alto) -->
-    <section class="fields">
-      <div class="field">
-        <label class="lbl">👤 Nombre</label>
-        <input id="nombreInput" class="input" type="text" placeholder="Nombre y apellidos">
-      </div>
-      <div class="field">
-        <label class="lbl">🔖 Placa / DNI</label>
-        <input id="placaInput" class="input" type="text" placeholder="Placa del vehículo o DNI">
-      </div>
-      <div class="field">
-        <label class="lbl">🪪 Identificador</label>
-        <input id="identInput" class="input" type="text" placeholder="Nombre del sereno o Tipo de vehículo">
-      </div>
-      <div class="field">
-        <label class="lbl">🏷️ Sector / Cargo</label>
-        <input id="sectorInput" class="input" type="text" placeholder="Sector o Cargo">
-      </div>
-    </section>
+  <main class="content">
+    <!-- Campos (todo vertical) -->
+    <div class="field">
+      <label class="lbl">👤 Nombre</label>
+      <input id="nombreInput" class="input" type="text" placeholder="Nombre y apellidos">
+    </div>
+    <div class="field">
+      <label class="lbl">🔖 Placa / DNI</label>
+      <input id="placaInput" class="input" type="text" placeholder="Placa del vehículo o DNI">
+    </div>
+    <div class="field">
+      <label class="lbl">🪪 Identificador</label>
+      <input id="identInput" class="input" type="text" placeholder="Nombre del sereno o Tipo de vehículo">
+    </div>
+    <div class="field">
+      <label class="lbl">🏷️ Sector / Cargo</label>
+      <input id="sectorInput" class="input" type="text" placeholder="Sector o Cargo">
+    </div>
 
     <!-- Preguntas (una sola columna) -->
-    <section class="questions">
-      <div class="q">
-        <div class="qlabel">1. Presentación personal</div>
-        <div class="stars" aria-label="Presentación personal">
-          <input type="radio" name="r1" id="r1_5" value="5"><label for="r1_5">★</label>
-          <input type="radio" name="r1" id="r1_4" value="4"><label for="r1_4">★</label>
-          <input type="radio" name="r1" id="r1_3" value="3"><label for="r1_3">★</label>
-          <input type="radio" name="r1" id="r1_2" value="2"><label for="r1_2">★</label>
-          <input type="radio" name="r1" id="r1_1" value="1"><label for="r1_1">★</label>
-        </div>
+    <div class="q">
+      <div class="qlabel">1. Presentación personal</div>
+      <div class="stars" aria-label="Presentación personal">
+        <input type="radio" name="r1" id="r1_5" value="5"><label for="r1_5">★</label>
+        <input type="radio" name="r1" id="r1_4" value="4"><label for="r1_4">★</label>
+        <input type="radio" name="r1" id="r1_3" value="3"><label for="r1_3">★</label>
+        <input type="radio" name="r1" id="r1_2" value="2"><label for="r1_2">★</label>
+        <input type="radio" name="r1" id="r1_1" value="1"><label for="r1_1">★</label>
       </div>
+    </div>
 
-      <div class="q">
-        <div class="qlabel">2. Limpieza del vehículo</div>
-        <div class="stars" aria-label="Limpieza del vehículo">
-          <input type="radio" name="r2" id="r2_5" value="5"><label for="r2_5">★</label>
-          <input type="radio" name="r2" id="r2_4" value="4"><label for="r2_4">★</label>
-          <input type="radio" name="r2" id="r2_3" value="3"><label for="r2_3">★</label>
-          <input type="radio" name="r2" id="r2_2" value="2"><label for="r2_2">★</label>
-          <input type="radio" name="r2" id="r2_1" value="1"><label for="r2_1">★</label>
-        </div>
+    <div class="q">
+      <div class="qlabel">2. Limpieza del vehículo</div>
+      <div class="stars" aria-label="Limpieza del vehículo">
+        <input type="radio" name="r2" id="r2_5" value="5"><label for="r2_5">★</label>
+        <input type="radio" name="r2" id="r2_4" value="4"><label for="r2_4">★</label>
+        <input type="radio" name="r2" id="r2_3" value="3"><label for="r2_3">★</label>
+        <input type="radio" name="r2" id="r2_2" value="2"><label for="r2_2">★</label>
+        <input type="radio" name="r2" id="r2_1" value="1"><label for="r2_1">★</label>
       </div>
+    </div>
 
-      <div class="q">
-        <div class="qlabel">3. ¿Llegó rápido?</div>
-        <div class="stars" aria-label="Rapidez">
-          <input type="radio" name="r3" id="r3_5" value="5"><label for="r3_5">★</label>
-          <input type="radio" name="r3" id="r3_4" value="4"><label for="r3_4">★</label>
-          <input type="radio" name="r3" id="r3_3" value="3"><label for="r3_3">★</label>
-          <input type="radio" name="r3" id="r3_2" value="2"><label for="r3_2">★</label>
-          <input type="radio" name="r3" id="r3_1" value="1"><label for="r3_1">★</label>
-        </div>
+    <div class="q">
+      <div class="qlabel">3. ¿Llegó rápido?</div>
+      <div class="stars" aria-label="Rapidez">
+        <input type="radio" name="r3" id="r3_5" value="5"><label for="r3_5">★</label>
+        <input type="radio" name="r3" id="r3_4" value="4"><label for="r3_4">★</label>
+        <input type="radio" name="r3" id="r3_3" value="3"><label for="r3_3">★</label>
+        <input type="radio" name="r3" id="r3_2" value="2"><label for="r3_2">★</label>
+        <input type="radio" name="r3" id="r3_1" value="1"><label for="r3_1">★</label>
       </div>
+    </div>
 
-      <div class="q">
-        <div class="qlabel">4. ¿Solucionó el problema?</div>
-        <div class="stars" aria-label="Solución del problema">
-          <input type="radio" name="r4" id="r4_5" value="5"><label for="r4_5">★</label>
-          <input type="radio" name="r4" id="r4_4" value="4"><label for="r4_4">★</label>
-          <input type="radio" name="r4" id="r4_3" value="3"><label for="r4_3">★</label>
-          <input type="radio" name="r4" id="r4_2" value="2"><label for="r4_2">★</label>
-          <input type="radio" name="r4" id="r4_1" value="1"><label for="r4_1">★</label>
-        </div>
+    <div class="q">
+      <div class="qlabel">4. ¿Solucionó el problema?</div>
+      <div class="stars" aria-label="Solución del problema">
+        <input type="radio" name="r4" id="r4_5" value="5"><label for="r4_5">★</label>
+        <input type="radio" name="r4" id="r4_4" value="4"><label for="r4_4">★</label>
+        <input type="radio" name="r4" id="r4_3" value="3"><label for="r4_3">★</label>
+        <input type="radio" name="r4" id="r4_2" value="2"><label for="r4_2">★</label>
+        <input type="radio" name="r4" id="r4_1" value="1"><label for="r4_1">★</label>
       </div>
-    </section>
+    </div>
+  </main>
 
-    <footer class="foot">
-      <button id="enviarBtn" class="btn">Enviar calificación</button>
-    </footer>
-  </div>
+  <footer class="footer">
+    <button id="enviarBtn" class="btn">Enviar calificación</button>
+  </footer>
 </div>
 
-<!-- Overlay: envío / gracias (permanece en gracias) -->
+<!-- Overlay: envío / gracias (permanece) -->
 <div id="overlay" class="overlay">
   <div id="overlayBox" class="overlay-box">
     <div id="spinner" class="spinner" aria-hidden="true"></div>
@@ -115,96 +111,83 @@
   const db = getFirestore(app);
 
   const $ = s => document.querySelector(s);
-  const getStar = (name) => {
+  const getStar = name => {
     const el = document.querySelector(`input[name="${name}"]:checked`);
     return el ? Number(el.value) : 0;
   };
 
   // Prefill opcional desde #PLACA|IDENTIFICADOR|SECTOR
   function parseHashPrefill() {
-    const i = location.href.indexOf("#");
-    if (i < 0) return;
-    let frag = decodeURIComponent(location.href.slice(i + 1)).trim();
-    let parts = frag.split("|");
-    if (parts.length < 3) parts = frag.split(",");
-    const [placa="", ident="", sector=""] = parts.map(s => s.trim());
-    if (placa && !$("#placaInput").value) $("#placaInput").value = placa;
-    if (ident && !$("#identInput").value) $("#identInput").value = ident;
-    if (sector && !$("#sectorInput").value) $("#sectorInput").value = sector;
+    const i = location.href.indexOf("#"); if (i < 0) return;
+    let f = decodeURIComponent(location.href.slice(i+1)).trim();
+    let p = f.split("|"); if (p.length < 3) p = f.split(",");
+    const [placa="", ident="", sector=""] = p.map(s => s.trim());
+    if (placa && !$("#placaInput").value)  $("#placaInput").value  = placa;
+    if (ident && !$("#identInput").value)  $("#identInput").value  = ident;
+    if (sector && !$("#sectorInput").value)$("#sectorInput").value = sector;
   }
 
-  function disableAll() {
-    document.querySelectorAll("input, button").forEach(el => el.disabled = true);
-  }
+  function disableAll(){ document.querySelectorAll("input,button").forEach(e=>e.disabled=true); }
 
-  function showSending() {
+  function showSending(){
     $("#spinner").style.display = "inline-block";
     $("#overlayMsg").textContent = "Se está enviando su respuesta…";
     $("#overlayBox").classList.remove("success");
     $("#overlay").classList.add("show");
   }
-
-  function showThanksPermanent() {
+  function showThanksPermanent(){
     $("#spinner").style.display = "none";
     $("#overlayMsg").textContent = "¡Gracias por su calificación!";
     $("#overlayBox").classList.add("success");
-    disableAll(); // se queda en “gracias”
+    disableAll(); // se queda en esta pantalla
   }
 
-  let sending = false;
-  async function guardar() {
-    if (sending) return;
+  let sending=false;
+  async function guardar(){
+    if(sending) return;
 
     const nombre = $("#nombreInput").value.trim();
     const placa  = $("#placaInput").value.trim();
     const ident  = $("#identInput").value.trim();
     const sector = $("#sectorInput").value.trim();
-
-    const r1 = getStar("r1");
-    const r2 = getStar("r2");
-    const r3 = getStar("r3");
-    const r4 = getStar("r4");
+    const r1 = getStar("r1"), r2 = getStar("r2"), r3 = getStar("r3"), r4 = getStar("r4");
 
     const errs = [];
-    if (!nombre) errs.push("El nombre es obligatorio.");
-    if (!placa)  errs.push("Placa / DNI es obligatorio.");
-    if (!ident)  errs.push("Identificador es obligatorio.");
-    if (!sector) errs.push("Sector / Cargo es obligatorio.");
-    if (!r1 || !r2 || !r3 || !r4) errs.push("Seleccione las 4 calificaciones.");
-    if (errs.length) { alert(errs.join("\n")); return; }
+    if(!nombre) errs.push("El nombre es obligatorio.");
+    if(!placa)  errs.push("Placa / DNI es obligatorio.");
+    if(!ident)  errs.push("Identificador es obligatorio.");
+    if(!sector) errs.push("Sector / Cargo es obligatorio.");
+    if(!r1 || !r2 || !r3 || !r4) errs.push("Seleccione las 4 calificaciones.");
+    if(errs.length){ alert(errs.join("\n")); return; }
 
-    // Tiempos (Lima) + serverTimestamp
-    const tz = "America/Lima";
-    const now = new Date();
-    const fecha = new Intl.DateTimeFormat("es-PE",{year:"numeric",month:"2-digit",day:"2-digit",timeZone:tz}).format(now);
-    const hora  = new Intl.DateTimeFormat("es-PE",{hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true,timeZone:tz}).format(now);
-    const payload = {
+    const tz="America/Lima", now=new Date();
+    const fecha=new Intl.DateTimeFormat("es-PE",{year:"numeric",month:"2-digit",day:"2-digit",timeZone:tz}).format(now);
+    const hora =new Intl.DateTimeFormat("es-PE",{hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true,timeZone:tz}).format(now);
+
+    const payload={
       nombre_usuario: nombre,
       placa_dni: placa,
       identificador: ident,
       sector_cargo: sector,
-      calificaciones: { presentacion: r1, limpieza: r2, rapidez: r3, solucion: r4 },
+      calificaciones:{ presentacion:r1, limpieza:r2, rapidez:r3, solucion:r4 },
       fecha, hora,
       timestamp: serverTimestamp(),
       timestamp_ms: now.getTime()
     };
 
-    try {
-      sending = true;
-      $("#enviarBtn").disabled = true;
-      showSending();
-      await addDoc(collection(db, "encuestas"), payload);
+    try{
+      sending=true; $("#enviarBtn").disabled=true; showSending();
+      await addDoc(collection(db,"encuestas"), payload);
       showThanksPermanent();
-    } catch (e) {
+    }catch(e){
       console.error(e);
       alert("No se pudo guardar. Intente nuevamente.");
       $("#overlay").classList.remove("show");
-      $("#enviarBtn").disabled = false;
-      sending = false;
+      $("#enviarBtn").disabled=false; sending=false;
     }
   }
 
-  window.addEventListener("DOMContentLoaded", () => {
+  window.addEventListener("DOMContentLoaded", ()=>{
     parseHashPrefill();
     $("#enviarBtn").addEventListener("click", guardar);
   });
