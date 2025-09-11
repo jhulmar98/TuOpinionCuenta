@@ -4,16 +4,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 <title>Tu Opinión Cuenta</title>
+
+<!-- Fuente moderna -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="screen">
+
   <header class="header">
     <h1>Tu Opinión Cuenta</h1>
   </header>
 
   <main class="content">
-    <!-- Campos (todo vertical) -->
+
+    <!-- Campos (vertical) -->
     <div class="field">
       <label class="lbl">👤 Nombre</label>
       <input id="nombreInput" class="input" type="text" placeholder="Nombre y apellidos">
@@ -31,50 +36,52 @@
       <input id="sectorInput" class="input" type="text" placeholder="Sector o Cargo">
     </div>
 
-    <!-- Preguntas (una sola columna) -->
-    <div class="q">
-      <div class="qlabel">1. Presentación personal</div>
-      <div class="stars" aria-label="Presentación personal">
-        <input type="radio" name="r1" id="r1_5" value="5"><label for="r1_5">★</label>
-        <input type="radio" name="r1" id="r1_4" value="4"><label for="r1_4">★</label>
-        <input type="radio" name="r1" id="r1_3" value="3"><label for="r1_3">★</label>
-        <input type="radio" name="r1" id="r1_2" value="2"><label for="r1_2">★</label>
-        <input type="radio" name="r1" id="r1_1" value="1"><label for="r1_1">★</label>
+    <!-- Preguntas (vertical + estrellas debajo) -->
+    <section class="qs">
+      <div class="q">
+        <div class="qlabel">1. Presentación personal</div>
+        <div class="stars" aria-label="Presentación personal">
+          <input type="radio" name="r1" id="r1_5" value="5"><label for="r1_5" title="5">★</label>
+          <input type="radio" name="r1" id="r1_4" value="4"><label for="r1_4" title="4">★</label>
+          <input type="radio" name="r1" id="r1_3" value="3"><label for="r1_3" title="3">★</label>
+          <input type="radio" name="r1" id="r1_2" value="2"><label for="r1_2" title="2">★</label>
+          <input type="radio" name="r1" id="r1_1" value="1"><label for="r1_1" title="1">★</label>
+        </div>
       </div>
-    </div>
 
-    <div class="q">
-      <div class="qlabel">2. Limpieza del vehículo</div>
-      <div class="stars" aria-label="Limpieza del vehículo">
-        <input type="radio" name="r2" id="r2_5" value="5"><label for="r2_5">★</label>
-        <input type="radio" name="r2" id="r2_4" value="4"><label for="r2_4">★</label>
-        <input type="radio" name="r2" id="r2_3" value="3"><label for="r2_3">★</label>
-        <input type="radio" name="r2" id="r2_2" value="2"><label for="r2_2">★</label>
-        <input type="radio" name="r2" id="r2_1" value="1"><label for="r2_1">★</label>
+      <div class="q">
+        <div class="qlabel">2. Limpieza del vehículo</div>
+        <div class="stars" aria-label="Limpieza del vehículo">
+          <input type="radio" name="r2" id="r2_5" value="5"><label for="r2_5">★</label>
+          <input type="radio" name="r2" id="r2_4" value="4"><label for="r2_4">★</label>
+          <input type="radio" name="r2" id="r2_3" value="3"><label for="r2_3">★</label>
+          <input type="radio" name="r2" id="r2_2" value="2"><label for="r2_2">★</label>
+          <input type="radio" name="r2" id="r2_1" value="1"><label for="r2_1">★</label>
+        </div>
       </div>
-    </div>
 
-    <div class="q">
-      <div class="qlabel">3. ¿Llegó rápido?</div>
-      <div class="stars" aria-label="Rapidez">
-        <input type="radio" name="r3" id="r3_5" value="5"><label for="r3_5">★</label>
-        <input type="radio" name="r3" id="r3_4" value="4"><label for="r3_4">★</label>
-        <input type="radio" name="r3" id="r3_3" value="3"><label for="r3_3">★</label>
-        <input type="radio" name="r3" id="r3_2" value="2"><label for="r3_2">★</label>
-        <input type="radio" name="r3" id="r3_1" value="1"><label for="r3_1">★</label>
+      <div class="q">
+        <div class="qlabel">3. ¿Llegó rápido?</div>
+        <div class="stars" aria-label="Rapidez">
+          <input type="radio" name="r3" id="r3_5" value="5"><label for="r3_5">★</label>
+          <input type="radio" name="r3" id="r3_4" value="4"><label for="r3_4">★</label>
+          <input type="radio" name="r3" id="r3_3" value="3"><label for="r3_3">★</label>
+          <input type="radio" name="r3" id="r3_2" value="2"><label for="r3_2">★</label>
+          <input type="radio" name="r3" id="r3_1" value="1"><label for="r3_1">★</label>
+        </div>
       </div>
-    </div>
 
-    <div class="q">
-      <div class="qlabel">4. ¿Solucionó el problema?</div>
-      <div class="stars" aria-label="Solución del problema">
-        <input type="radio" name="r4" id="r4_5" value="5"><label for="r4_5">★</label>
-        <input type="radio" name="r4" id="r4_4" value="4"><label for="r4_4">★</label>
-        <input type="radio" name="r4" id="r4_3" value="3"><label for="r4_3">★</label>
-        <input type="radio" name="r4" id="r4_2" value="2"><label for="r4_2">★</label>
-        <input type="radio" name="r4" id="r4_1" value="1"><label for="r4_1">★</label>
+      <div class="q">
+        <div class="qlabel">4. ¿Solucionó el problema?</div>
+        <div class="stars" aria-label="Solución del problema">
+          <input type="radio" name="r4" id="r4_5" value="5"><label for="r4_5">★</label>
+          <input type="radio" name="r4" id="r4_4" value="4"><label for="r4_4">★</label>
+          <input type="radio" name="r4" id="r4_3" value="3"><label for="r4_3">★</label>
+          <input type="radio" name="r4" id="r4_2" value="2"><label for="r4_2">★</label>
+          <input type="radio" name="r4" id="r4_1" value="1"><label for="r4_1">★</label>
+        </div>
       </div>
-    </div>
+    </section>
   </main>
 
   <footer class="footer">
@@ -139,7 +146,7 @@
     $("#spinner").style.display = "none";
     $("#overlayMsg").textContent = "¡Gracias por su calificación!";
     $("#overlayBox").classList.add("success");
-    disableAll(); // se queda en esta pantalla
+    disableAll(); // queda en pantalla
   }
 
   let sending=false;
