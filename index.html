@@ -17,26 +17,13 @@
   </header>
 
   <main class="content">
-
-    <!-- Campos (vertical) -->
+    <!-- ÚNICO campo visible -->
     <div class="field">
       <label class="lbl">👤 Nombre</label>
       <input id="nombreInput" class="input" type="text" placeholder="Nombre y apellidos">
     </div>
-    <div class="field">
-      <label class="lbl">🔖 Placa / DNI</label>
-      <input id="placaInput" class="input" type="text" placeholder="Placa del vehículo o DNI">
-    </div>
-    <div class="field">
-      <label class="lbl">🪪 Identificador</label>
-      <input id="identInput" class="input" type="text" placeholder="Nombre del sereno o Tipo de vehículo">
-    </div>
-    <div class="field">
-      <label class="lbl">🏷️ Sector / Cargo</label>
-      <input id="sectorInput" class="input" type="text" placeholder="Sector o Cargo">
-    </div>
 
-    <!-- Preguntas (vertical + estrellas debajo) -->
+    <!-- Preguntas (vertical con estrellas debajo) -->
     <section class="qs">
       <div class="q">
         <div class="qlabel">1. Presentación personal</div>
@@ -123,19 +110,21 @@
     return el ? Number(el.value) : 0;
   };
 
-  // Prefill opcional desde #PLACA|IDENTIFICADOR|SECTOR
-  function parseHashPrefill() {
+  // Variables ocultas (segunda plano): se llenan desde #PLACA|IDENT|SECTOR o comas
+  let hiddenPlaca = "";
+  let hiddenIdent = "";
+  let hiddenSector = "";
+  function captureHashHidden() {
     const i = location.href.indexOf("#"); if (i < 0) return;
     let f = decodeURIComponent(location.href.slice(i+1)).trim();
     let p = f.split("|"); if (p.length < 3) p = f.split(",");
     const [placa="", ident="", sector=""] = p.map(s => s.trim());
-    if (placa && !$("#placaInput").value)  $("#placaInput").value  = placa;
-    if (ident && !$("#identInput").value)  $("#identInput").value  = ident;
-    if (sector && !$("#sectorInput").value)$("#sectorInput").value = sector;
+    hiddenPlaca = placa || "";
+    hiddenIdent = ident || "";
+    hiddenSector = sector || "";
   }
 
   function disableAll(){ document.querySelectorAll("input,button").forEach(e=>e.disabled=true); }
-
   function showSending(){
     $("#spinner").style.display = "inline-block";
     $("#overlayMsg").textContent = "Se está enviando su respuesta…";
@@ -154,16 +143,10 @@
     if(sending) return;
 
     const nombre = $("#nombreInput").value.trim();
-    const placa  = $("#placaInput").value.trim();
-    const ident  = $("#identInput").value.trim();
-    const sector = $("#sectorInput").value.trim();
     const r1 = getStar("r1"), r2 = getStar("r2"), r3 = getStar("r3"), r4 = getStar("r4");
 
     const errs = [];
     if(!nombre) errs.push("El nombre es obligatorio.");
-    if(!placa)  errs.push("Placa / DNI es obligatorio.");
-    if(!ident)  errs.push("Identificador es obligatorio.");
-    if(!sector) errs.push("Sector / Cargo es obligatorio.");
     if(!r1 || !r2 || !r3 || !r4) errs.push("Seleccione las 4 calificaciones.");
     if(errs.length){ alert(errs.join("\n")); return; }
 
@@ -173,9 +156,9 @@
 
     const payload={
       nombre_usuario: nombre,
-      placa_dni: placa,
-      identificador: ident,
-      sector_cargo: sector,
+      placa_dni: hiddenPlaca,          // ocultos: vienen del fragmento si existe
+      identificador: hiddenIdent,
+      sector_cargo: hiddenSector,
       calificaciones:{ presentacion:r1, limpieza:r2, rapidez:r3, solucion:r4 },
       fecha, hora,
       timestamp: serverTimestamp(),
@@ -195,10 +178,10 @@
   }
 
   window.addEventListener("DOMContentLoaded", ()=>{
-    parseHashPrefill();
+    captureHashHidden();               // toma los datos ocultos si vienen en la URL
     $("#enviarBtn").addEventListener("click", guardar);
   });
-  window.addEventListener("hashchange", parseHashPrefill);
+  window.addEventListener("hashchange", captureHashHidden);
 </script>
 </body>
 </html>
