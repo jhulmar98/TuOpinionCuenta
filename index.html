@@ -1,188 +1,89 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-<title>Tu Opinión Cuenta</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Tu Opinión Cuenta</title>
 
-<!-- Fuente moderna -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+  <!-- Fuente moderna -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="screen">
+  <div class="screen">
+    <header class="header">
+      <h1>Tu Opinión Cuenta</h1>
+    </header>
 
-  <header class="header">
-    <h1>Tu Opinión Cuenta</h1>
-  </header>
-
-  <main class="content">
-    <!-- ÚNICO campo visible -->
-    <div class="field">
-      <label class="lbl">Datos: </label>
-      <input id="nombreInput" class="input" type="text" placeholder="Nombre y apellidos">
-    </div>
-
-    <!-- Preguntas (vertical con estrellas debajo) -->
-    <section class="qs">
-      <div class="q">
-        <div class="qlabel">1. Presentación personal</div>
-        <div class="stars" aria-label="Presentación personal">
-          <input type="radio" name="r1" id="r1_5" value="5"><label for="r1_5" title="5">★</label>
-          <input type="radio" name="r1" id="r1_4" value="4"><label for="r1_4" title="4">★</label>
-          <input type="radio" name="r1" id="r1_3" value="3"><label for="r1_3" title="3">★</label>
-          <input type="radio" name="r1" id="r1_2" value="2"><label for="r1_2" title="2">★</label>
-          <input type="radio" name="r1" id="r1_1" value="1"><label for="r1_1" title="1">★</label>
-        </div>
+    <main class="content">
+      <!-- ÚNICO campo visible -->
+      <div class="field">
+        <label class="lbl">Datos: </label>
+        <input id="nombreInput" class="input" type="text" placeholder="Nombre y apellidos">
       </div>
 
-      <div class="q">
-        <div class="qlabel">2. Limpieza del vehículo</div>
-        <div class="stars" aria-label="Limpieza del vehículo">
-          <input type="radio" name="r2" id="r2_5" value="5"><label for="r2_5">★</label>
-          <input type="radio" name="r2" id="r2_4" value="4"><label for="r2_4">★</label>
-          <input type="radio" name="r2" id="r2_3" value="3"><label for="r2_3">★</label>
-          <input type="radio" name="r2" id="r2_2" value="2"><label for="r2_2">★</label>
-          <input type="radio" name="r2" id="r2_1" value="1"><label for="r2_1">★</label>
+      <!-- Preguntas (vertical con estrellas debajo) -->
+      <section class="qs">
+        <div class="q">
+          <div class="qlabel">1. Presentación personal</div>
+          <div class="stars" aria-label="Presentación personal">
+            <input type="radio" name="r1" id="r1_5" value="5"><label for="r1_5" title="5">★</label>
+            <input type="radio" name="r1" id="r1_4" value="4"><label for="r1_4" title="4">★</label>
+            <input type="radio" name="r1" id="r1_3" value="3"><label for="r1_3" title="3">★</label>
+            <input type="radio" name="r1" id="r1_2" value="2"><label for="r1_2" title="2">★</label>
+            <input type="radio" name="r1" id="r1_1" value="1"><label for="r1_1" title="1">★</label>
+          </div>
         </div>
-      </div>
 
-      <div class="q">
-        <div class="qlabel">3. ¿Llegó rápido?</div>
-        <div class="stars" aria-label="Rapidez">
-          <input type="radio" name="r3" id="r3_5" value="5"><label for="r3_5">★</label>
-          <input type="radio" name="r3" id="r3_4" value="4"><label for="r3_4">★</label>
-          <input type="radio" name="r3" id="r3_3" value="3"><label for="r3_3">★</label>
-          <input type="radio" name="r3" id="r3_2" value="2"><label for="r3_2">★</label>
-          <input type="radio" name="r3" id="r3_1" value="1"><label for="r3_1">★</label>
+        <div class="q">
+          <div class="qlabel">2. Limpieza del vehículo</div>
+          <div class="stars" aria-label="Limpieza del vehículo">
+            <input type="radio" name="r2" id="r2_5" value="5"><label for="r2_5">★</label>
+            <input type="radio" name="r2" id="r2_4" value="4"><label for="r2_4">★</label>
+            <input type="radio" name="r2" id="r2_3" value="3"><label for="r2_3">★</label>
+            <input type="radio" name="r2" id="r2_2" value="2"><label for="r2_2">★</label>
+            <input type="radio" name="r2" id="r2_1" value="1"><label for="r2_1">★</label>
+          </div>
         </div>
-      </div>
 
-      <div class="q">
-        <div class="qlabel">4. ¿Solucionó el problema?</div>
-        <div class="stars" aria-label="Solución del problema">
-          <input type="radio" name="r4" id="r4_5" value="5"><label for="r4_5">★</label>
-          <input type="radio" name="r4" id="r4_4" value="4"><label for="r4_4">★</label>
-          <input type="radio" name="r4" id="r4_3" value="3"><label for="r4_3">★</label>
-          <input type="radio" name="r4" id="r4_2" value="2"><label for="r4_2">★</label>
-          <input type="radio" name="r4" id="r4_1" value="1"><label for="r4_1">★</label>
+        <div class="q">
+          <div class="qlabel">3. ¿Llegó rápido?</div>
+          <div class="stars" aria-label="Rapidez">
+            <input type="radio" name="r3" id="r3_5" value="5"><label for="r3_5">★</label>
+            <input type="radio" name="r3" id="r3_4" value="4"><label for="r3_4">★</label>
+            <input type="radio" name="r3" id="r3_3" value="3"><label for="r3_3">★</label>
+            <input type="radio" name="r3" id="r3_2" value="2"><label for="r3_2">★</label>
+            <input type="radio" name="r3" id="r3_1" value="1"><label for="r3_1">★</label>
+          </div>
         </div>
-      </div>
-    </section>
-  </main>
 
-  <footer class="footer">
-    <button id="enviarBtn" class="btn">Enviar calificación</button>
-  </footer>
-</div>
+        <div class="q">
+          <div class="qlabel">4. ¿Solucionó el problema?</div>
+          <div class="stars" aria-label="Solución del problema">
+            <input type="radio" name="r4" id="r4_5" value="5"><label for="r4_5">★</label>
+            <input type="radio" name="r4" id="r4_4" value="4"><label for="r4_4">★</label>
+            <input type="radio" name="r4" id="r4_3" value="3"><label for="r4_3">★</label>
+            <input type="radio" name="r4" id="r4_2" value="2"><label for="r4_2">★</label>
+            <input type="radio" name="r4" id="r4_1" value="1"><label for="r4_1">★</label>
+          </div>
+        </div>
+      </section>
+    </main>
 
-<!-- Overlay: envío / gracias (permanece) -->
-<div id="overlay" class="overlay">
-  <div id="overlayBox" class="overlay-box">
-    <div id="spinner" class="spinner" aria-hidden="true"></div>
-    <div id="overlayMsg" class="overlay-msg">Se está enviando su respuesta…</div>
+    <footer class="footer">
+      <button id="enviarBtn" class="btn">Enviar calificación</button>
+    </footer>
   </div>
-</div>
 
-<!-- Firebase + Firestore -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  <!-- Overlay: envío / gracias (permanece) -->
+  <div id="overlay" class="overlay">
+    <div id="overlayBox" class="overlay-box">
+      <div id="spinner" class="spinner" aria-hidden="true"></div>
+      <div id="overlayMsg" class="overlay-msg">Enviando respuesta…</div>
+    </div>
+  </div>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyAzqBW_0QduNdRk2lHFzgh8cOqHOzCRq8A",
-    authDomain: "tu-opinion-importa-msi.firebaseapp.com",
-    projectId: "tu-opinion-importa-msi",
-    storageBucket: "tu-opinion-importa-msi.firebasestorage.app",
-    messagingSenderId: "933860804282",
-    appId: "1:933860804282:web:8afef3b37b9d01fdca6483",
-    measurementId: "G-ZM3EM2Z4W7"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  try { getAnalytics(app); } catch(_) {}
-  const db = getFirestore(app);
-
-  const $ = s => document.querySelector(s);
-  const getStar = name => {
-    const el = document.querySelector(`input[name="${name}"]:checked`);
-    return el ? Number(el.value) : 0;
-  };
-
-  // Variables ocultas (segunda plano): se llenan desde #PLACA|IDENT|SECTOR o comas
-  let hiddenPlaca = "";
-  let hiddenIdent = "";
-  let hiddenSector = "";
-  function captureHashHidden() {
-    const i = location.href.indexOf("#"); if (i < 0) return;
-    let f = decodeURIComponent(location.href.slice(i+1)).trim();
-    let p = f.split("|"); if (p.length < 3) p = f.split(",");
-    const [placa="", ident="", sector=""] = p.map(s => s.trim());
-    hiddenPlaca = placa || "";
-    hiddenIdent = ident || "";
-    hiddenSector = sector || "";
-  }
-
-  function disableAll(){ document.querySelectorAll("input,button").forEach(e=>e.disabled=true); }
-  function showSending(){
-    $("#spinner").style.display = "inline-block";
-    $("#overlayMsg").textContent = "Enviando respuesta…";
-    $("#overlayBox").classList.remove("success");
-    $("#overlay").classList.add("show");
-  }
-  function showThanksPermanent(){
-    $("#spinner").style.display = "none";
-    $("#overlayMsg").textContent = "¡Gracias por su calificación!";
-    $("#overlayBox").classList.add("success");
-    disableAll(); // queda en pantalla
-  }
-
-  let sending=false;
-  async function guardar(){
-    if(sending) return;
-
-    const nombre = $("#nombreInput").value.trim();
-    const r1 = getStar("r1"), r2 = getStar("r2"), r3 = getStar("r3"), r4 = getStar("r4");
-
-    const errs = [];
-    if(!nombre) errs.push("El nombre es obligatorio.");
-    if(!r1 || !r2 || !r3 || !r4) errs.push("Seleccione las 4 calificaciones.");
-    if(errs.length){ alert(errs.join("\n")); return; }
-
-    const tz="America/Lima", now=new Date();
-    const fecha=new Intl.DateTimeFormat("es-PE",{year:"numeric",month:"2-digit",day:"2-digit",timeZone:tz}).format(now);
-    const hora =new Intl.DateTimeFormat("es-PE",{hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true,timeZone:tz}).format(now);
-
-    const payload={
-      nombre_usuario: nombre,
-      placa_dni: hiddenPlaca,          // ocultos: vienen del fragmento si existe
-      identificador: hiddenIdent,
-      sector_cargo: hiddenSector,
-      calificaciones:{ presentacion:r1, limpieza:r2, rapidez:r3, solucion:r4 },
-      fecha, hora,
-      timestamp: serverTimestamp(),
-      
-    };
-
-    try{
-      sending=true; $("#enviarBtn").disabled=true; showSending();
-      await addDoc(collection(db,"encuestas"), payload);
-      showThanksPermanent();
-    }catch(e){
-      console.error(e);
-      alert("No se pudo guardar. Intente nuevamente.");
-      $("#overlay").classList.remove("show");
-      $("#enviarBtn").disabled=false; sending=false;
-    }
-  }
-
-  window.addEventListener("DOMContentLoaded", ()=>{
-    captureHashHidden();               // toma los datos ocultos si vienen en la URL
-    $("#enviarBtn").addEventListener("click", guardar);
-  });
-  window.addEventListener("hashchange", captureHashHidden);
-</script>
+  <!-- App JS separada -->
+  <script type="module" src="config.js"></script>
 </body>
 </html>
-
