@@ -1,9 +1,12 @@
 // Firebase + Firestore (Módulos)
+// ============================================================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
 import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// Configuración de tu proyecto Firebase
+// ============================================================
+// Configuración Firebase
+// ============================================================
 const firebaseConfig = {
   apiKey: "AIzaSyCkNbamNjoe4HjTnu9XyiWojDFzO7KSNUA",
   authDomain: "municipalidad-msi.firebaseapp.com",
@@ -19,14 +22,18 @@ const app = initializeApp(firebaseConfig);
 try { getAnalytics(app); } catch (_) {}
 const db = getFirestore(app);
 
+// ============================================================
 // Helpers DOM
+// ============================================================
 const $ = s => document.querySelector(s);
 const getStar = name => {
   const el = document.querySelector(`input[name="${name}"]:checked`);
   return el ? Number(el.value) : 0;
 };
 
-// Variables ocultas (se llenan desde el hash #PLACA|IDENT|SECTOR o comas)
+// ============================================================
+// Variables ocultas desde hash #PLACA|IDENT|SECTOR
+// ============================================================
 let hiddenPlaca = "";
 let hiddenIdent = "";
 let hiddenSector = "";
@@ -43,6 +50,9 @@ function captureHashHidden() {
   hiddenSector = sector || "";
 }
 
+// ============================================================
+// UI helpers
+// ============================================================
 function disableAll() {
   document.querySelectorAll("input,button").forEach(e => e.disabled = true);
 }
@@ -58,9 +68,12 @@ function showThanksPermanent() {
   $("#spinner").style.display = "none";
   $("#overlayMsg").textContent = "¡Gracias por su calificación!";
   $("#overlayBox").classList.add("success");
-  disableAll(); // queda en pantalla
+  disableAll();
 }
 
+// ============================================================
+// Guardar datos en subcolección por fecha
+// ============================================================
 let sending = false;
 async function guardar() {
   if (sending) return;
@@ -73,21 +86,34 @@ async function guardar() {
   if (!r1 || !r2 || !r3 || !r4) errs.push("Seleccione las 4 calificaciones.");
   if (errs.length) { alert(errs.join("\n")); return; }
 
-  const tz = "America/Lima", now = new Date();
-  const fecha = new Intl.DateTimeFormat("es-PE", {
-    year: "numeric", month: "2-digit", day: "2-digit", timeZone: tz
-  }).format(now);
+  const tz = "America/Lima";
+  const now = new Date();
+
+  // ✅ FECHA con formato dd-mm-aaaa
+  const dia = String(now.getDate()).padStart(2, "0");
+  const mes = String(now.getMonth() + 1).padStart(2, "0");
+  const anio = now.getFullYear();
+  const fecha = `${dia}-${mes}-${anio}`;
+
+  // ⏰ HORA formato 12h (hh:mm:ss AM/PM)
   const hora = new Intl.DateTimeFormat("es-PE", {
     hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true, timeZone: tz
   }).format(now);
 
+  // Datos a guardar
   const payload = {
     nombre_usuario: nombre,
-    placa_dni: hiddenPlaca,      // ocultos: vienen del fragmento si existe
+    placa_dni: hiddenPlaca,
     identificador: hiddenIdent,
     sector_cargo: hiddenSector,
-    calificaciones: { presentacion: r1, limpieza: r2, rapidez: r3, solucion: r4 },
-    fecha, hora,
+    calificaciones: { 
+      presentacion: r1, 
+      limpieza: r2, 
+      rapidez: r3, 
+      solucion: r4 
+    },
+    fecha,
+    hora,
     timestamp: serverTimestamp(),
   };
 
@@ -95,7 +121,11 @@ async function guardar() {
     sending = true;
     $("#enviarBtn").disabled = true;
     showSending();
-    await addDoc(collection(db, "encuestas"), payload);
+
+    // 🔥 Guardar dentro de una subcolección según la fecha
+    const refDia = collection(db, "encuestas", fecha, "respuestas");
+    await addDoc(refDia, payload);
+
     showThanksPermanent();
   } catch (e) {
     console.error(e);
@@ -106,9 +136,11 @@ async function guardar() {
   }
 }
 
-// Listeners
+// ============================================================
+// Eventos
+// ============================================================
 window.addEventListener("DOMContentLoaded", () => {
-  captureHashHidden(); // toma los datos ocultos si vienen en la URL
+  captureHashHidden();
   $("#enviarBtn").addEventListener("click", guardar);
 });
 window.addEventListener("hashchange", captureHashHidden);
