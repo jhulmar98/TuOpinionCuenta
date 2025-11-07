@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -16,13 +17,13 @@
     </header>
 
     <main class="content">
-      <!-- ÚNICO campo visible -->
+      <!-- Campo visible -->
       <div class="field">
         <label class="lbl">Datos: </label>
         <input id="nombreInput" class="input" type="text" placeholder="Nombre y apellidos">
       </div>
 
-      <!-- Preguntas (vertical con estrellas debajo) -->
+      <!-- Preguntas -->
       <section class="qs">
         <div class="q">
           <div class="qlabel">1. Presentación personal</div>
@@ -36,7 +37,7 @@
         </div>
 
         <div class="q">
-          <div class="qlabel">2. Limpieza del vehículo</div>
+          <div class="qlabel">2. Limpieza del vehículo <span style="color:#888;"></span></div>
           <div class="stars" aria-label="Limpieza del vehículo">
             <input type="radio" name="r2" id="r2_5" value="5"><label for="r2_5">★</label>
             <input type="radio" name="r2" id="r2_4" value="4"><label for="r2_4">★</label>
@@ -67,6 +68,12 @@
             <input type="radio" name="r4" id="r4_1" value="1"><label for="r4_1">★</label>
           </div>
         </div>
+
+        <!-- 🆕 Caja de comentarios -->
+        <div class="q">
+          <div class="qlabel">5. Comentarios o sugerencias <span style="color:#888;"></span></div>
+          <textarea id="comentarioInput" class="input" rows="3" placeholder="Escriba aquí su comentario..."></textarea>
+        </div>
       </section>
     </main>
 
@@ -75,7 +82,7 @@
     </footer>
   </div>
 
-  <!-- Overlay: envío / gracias (permanece) -->
+  <!-- Overlay: envío / gracias -->
   <div id="overlay" class="overlay">
     <div id="overlayBox" class="overlay-box">
       <div id="spinner" class="spinner" aria-hidden="true"></div>
