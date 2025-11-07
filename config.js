@@ -1,4 +1,5 @@
-// ===================config.js=========================================
+// Firebase + Firestore (Módulos)
+// ============================================================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
 import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -53,7 +54,7 @@ function captureHashHidden() {
 // UI helpers
 // ============================================================
 function disableAll() {
-  document.querySelectorAll("input,button,textarea").forEach(e => e.disabled = true);
+  document.querySelectorAll("input,button,textarea").forEach(e => e.disabled = true); // 🆕 incluyo textarea
 }
 
 function showSending() {
@@ -78,48 +79,49 @@ async function guardar() {
   if (sending) return;
 
   const nombre = $("#nombreInput").value.trim();
-  const comentario = $("#comentarioInput").value.trim();
-  const r1 = getStar("r1");
-  const r2 = getStar("r2");
-  const r3 = getStar("r3");
-  const r4 = getStar("r4");
+  const r1 = getStar("r1"),
+        r2 = getStar("r2"),
+        r3 = getStar("r3"),
+        r4 = getStar("r4");
+  
+  const comentario = $("#comentarioInput") ? $("#comentarioInput").value.trim() : ""; // 🆕 obtener comentario
 
   const errs = [];
   if (!nombre) errs.push("El nombre es obligatorio.");
+  // 🆕 solo r1, r3, r4 son obligatorios
   if (!r1 || !r3 || !r4) errs.push("Debe calificar la presentación, rapidez y solución.");
-  if (errs.length) {
-    alert(errs.join("\n"));
-    return;
-  }
+  if (errs.length) { alert(errs.join("\n")); return; }
 
   const tz = "America/Lima";
   const now = new Date();
 
+  // ✅ FECHA con formato dd-mm-aaaa
   const dia = String(now.getDate()).padStart(2, "0");
   const mes = String(now.getMonth() + 1).padStart(2, "0");
   const anio = now.getFullYear();
   const fecha = `${dia}-${mes}-${anio}`;
 
+  // ⏰ HORA formato 12h (hh:mm:ss AM/PM)
   const hora = new Intl.DateTimeFormat("es-PE", {
-    hour: "2-digit", minute: "2-digit", second: "2-digit",
-    hour12: true, timeZone: tz
+    hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true, timeZone: tz
   }).format(now);
 
+  // Datos a guardar (mantiene estructura y orden)
   const payload = {
     nombre_usuario: nombre,
     placa_dni: hiddenPlaca,
     identificador: hiddenIdent,
     sector_cargo: hiddenSector,
-    calificaciones: {
-      "1_presentacion_personal": r1,
-      "2_limpieza_vehiculo": r2 ? r2 : "No aplica",
-      "3_llego_rapido": r3,
-      "4_soluciono_problema": r4
+    calificaciones: { 
+      presentacion: r1, 
+      limpieza: r2 ? r2 : "No aplica", // 🆕 opcional
+      rapidez: r3, 
+      solucion: r4 
     },
-    comentario: comentario || "Sin comentarios",
+    comentario: comentario || "Sin comentarios", // 🆕 nuevo campo
     fecha,
     hora,
-    timestamp: serverTimestamp()
+    timestamp: serverTimestamp(),
   };
 
   try {
@@ -127,6 +129,7 @@ async function guardar() {
     $("#enviarBtn").disabled = true;
     showSending();
 
+    // 🔥 Guardar dentro de una subcolección según la fecha
     const refDia = collection(db, "encuestas", fecha, "respuestas");
     await addDoc(refDia, payload);
 
